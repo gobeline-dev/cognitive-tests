@@ -39,6 +39,9 @@ Trois familles de tests cognitifs, plus un test complet :
     côtés/points.
 
 Fonctionnalités clés :
+  • Bilingue anglais / français, ANGLAIS PAR DÉFAUT, bascule EN/FR
+    à tout moment (préférence mémorisée). Interface ET contenu des
+    44 questions traduits.
   • Deux modes :
       - Mode examen        : correction et score affichés à la fin.
       - Mode apprentissage : correction immédiate après chaque réponse.
@@ -71,20 +74,25 @@ STRUCTURE DU PROJET
   public/.nojekyll           Désactive Jekyll sur GitHub Pages
 
   src/
-    main.tsx                 Montage de l'application React
+    main.tsx                 Montage React (dans LangProvider)
     App.tsx                  Machine à états + chrono + persistance
+    i18n.tsx                 Internationalisation EN/FR (contexte + chaînes)
     styles.css               Feuille de styles (design system complet)
     types.ts                 Types partagés
     lib/
       figures.ts             Générateurs de figures SVG + libellés a11y
-      questions.ts           Assemblage de la banque + normalisation
+      questions.ts           Assemblage de la banque (par langue) + normalisation
       storage.ts             Hook useLocalStorage
     data/                    « Base de données » de questions
-      numeric.ts             16 questions numériques
-      verbal.ts              16 questions verbales
-      abstract.ts            12 questions abstraites (FigSpec)
+      numeric.ts             16 questions numériques (FR)
+      verbal.ts              16 questions verbales (FR)
+      abstract.ts            12 questions abstraites (FigSpec, partagées)
+      en/numeric.ts          16 questions numériques (EN)
+      en/verbal.ts           16 questions verbales (EN)
+      en/abstract.ts         12 questions abstraites (EN, réutilise les figures)
     components/
       Emblem.tsx             Emblème (anneau d'étoiles)
+      LangToggle.tsx         Sélecteur de langue EN/FR
       Intro.tsx              Écran d'accueil + tableau de bord
       Exam.tsx               Écran d'examen (question, chrono, clavier)
       Results.tsx            Écran de résultats + revue commentée
@@ -126,11 +134,15 @@ URL du site publié :
 
 AJOUTER OU MODIFIER DES QUESTIONS
 ---------------------------------
-Éditez simplement les fichiers de données dans src/data/ :
+Éditez les fichiers de données dans src/data/ (FR) et src/data/en/ (EN) :
   • numeric.ts  — objets { tag, stem (HTML), options[5], correct, explain }
   • verbal.ts   — objets { tag, passage, statement, correct, explain }
   • abstract.ts — objets { tag, prompt, series, options, correct, explain }
                   où chaque figure est un descripteur [générateur, ...args].
+IMPORTANT : garder FR et EN alignés (même nombre de questions, même
+ordre, même ordre des options et même index `correct`). Les fichiers
+en/*.ts doivent refléter les mêmes questions traduites. Pour l'abstrait,
+en/abstract.ts réutilise les figures FR et ne traduit que le texte.
 Les compteurs et budgets-temps s'ajustent automatiquement.
 
 

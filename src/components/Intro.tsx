@@ -1,21 +1,15 @@
-// Écran d'accueil : choix de la section, du mode, du chronomètre, tableau de bord, reset.
+// Écran d'accueil : langue, choix de section/mode/chrono, tableau de bord, reset.
 import { useState } from 'react'
 import type { ExamMode, ExamSection, ResultRecord } from '../types'
-import { questionCount, SEC_META } from '../lib/questions'
+import { questionCount, SEC_MIN } from '../lib/questions'
+import { useLang } from '../i18n'
 import { Emblem } from './Emblem'
+import { LangToggle } from './LangToggle'
 
 const ICONS: Record<ExamSection, React.ReactNode> = {
   num: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <text
-        x="12"
-        y="17"
-        textAnchor="middle"
-        fontFamily="'IBM Plex Mono', monospace"
-        fontWeight="700"
-        fontSize="13"
-        letterSpacing="0.5"
-      >
+      <text x="12" y="17" textAnchor="middle" fontFamily="'IBM Plex Mono', monospace" fontWeight="700" fontSize="13" letterSpacing="0.5">
         123
       </text>
     </svg>
@@ -40,11 +34,11 @@ interface Props {
 }
 
 export function Intro({ history, onStart, onReset }: Props) {
+  const { t } = useLang()
   const [sec, setSec] = useState<ExamSection | null>(null)
   const [mode, setMode] = useState<ExamMode>('exam')
   const [chrono, setChrono] = useState(true)
 
-  // Meilleur score par section (pour le tableau de bord).
   const best: Partial<Record<ExamSection, number>> = {}
   history.forEach((h) => {
     if (best[h.sec] === undefined || h.pct > best[h.sec]!) best[h.sec] = h.pct
@@ -55,89 +49,77 @@ export function Intro({ history, onStart, onReset }: Props) {
       <div className="mast">
         <Emblem />
         <div className="mast-txt">
-          <div className="kicker">Entraînement · raisonnement cognitif</div>
-          <h1>Simulateur type SHL — préparation EPSO</h1>
+          <div className="kicker">{t.kicker}</div>
+          <h1>{t.title}</h1>
         </div>
+        <LangToggle />
       </div>
 
       <div className="card">
         <div className="lede">
-          <p>
-            Choisissez une famille de tests, ou lancez le test complet. Chaque section reproduit le format des évaluations
-            cognitives SHL Verify : réponse unique, correction commentée, chronomètre optionnel.
-          </p>
+          <p>{t.lede}</p>
         </div>
 
         <div className="sec-grid">
-          {SECTIONS.map((s) => {
-            const m = SEC_META[s]
-            return (
-              <button key={s} className="sec" aria-pressed={sec === s} onClick={() => setSec(s)}>
-                <span className="ic">{ICONS[s]}</span>
-                <span>
-                  <b>{m.name}</b>
-                  <span className="desc">{m.blurb}</span>
-                  <span className="n">
-                    {questionCount(s)} questions · ~{m.min} min
-                  </span>
-                </span>
-              </button>
-            )
-          })}
+          {SECTIONS.map((s) => (
+            <button key={s} className="sec" aria-pressed={sec === s} onClick={() => setSec(s)}>
+              <span className="ic">{ICONS[s]}</span>
+              <span>
+                <b>{t.sec[s].name}</b>
+                <span className="desc">{t.sec[s].blurb}</span>
+                <span className="n">{t.qCount(questionCount(s), SEC_MIN[s])}</span>
+              </span>
+            </button>
+          ))}
         </div>
 
         <div className="opts-row">
           <label className="toggle">
             <input type="checkbox" checked={chrono} onChange={(e) => setChrono(e.target.checked)} />
             <span className="sw" />
-            Chronomètre
+            {t.timerLabel}
           </label>
           <label className="toggle">
             <input type="checkbox" checked={mode === 'learn'} onChange={(e) => setMode(e.target.checked ? 'learn' : 'exam')} />
             <span className="sw" />
             <span className="opt-label">
-              Mode apprentissage <b>{mode === 'learn' ? '(correction immédiate)' : '(correction à la fin)'}</b>
+              {t.learnLabel} <b>{mode === 'learn' ? t.learnImmediate : t.learnDeferred}</b>
             </span>
           </label>
         </div>
 
         <div className="foot-cta">
           <button className="btn btn-primary" disabled={!sec} onClick={() => sec && onStart(sec, mode, chrono)}>
-            Commencer
+            {t.start}
           </button>
-          <span className="hint">{sec ? `Prêt : ${SEC_META[sec].name}.` : "Sélectionnez d'abord une section."}</span>
+          <span className="hint">{sec ? t.ready(t.sec[sec].name) : t.selectFirst}</span>
         </div>
 
         <div className="note">
-          <div className="box">
-            <b>Comment ça marche —</b> répondez à chaque question, naviguez librement avec « Précédent / Suivant », via les
-            étoiles de progression ou au clavier (touches <b>A–E</b>, flèches <b>← →</b>). En <b>mode examen</b>, la correction
-            apparaît à la fin ; en <b>mode apprentissage</b>, elle s'affiche après chaque réponse. Objectif : reconnaître les
-            mécanismes, gérer le temps, et repérer les pièges classiques (notamment les « On ne peut pas savoir » en verbal).
-          </div>
+          <div className="box">{t.howItWorks}</div>
         </div>
 
         {history.length > 0 && (
           <div className="dash">
-            <h3>Votre progression</h3>
+            <h3>{t.progressTitle}</h3>
             <div className="dash-box">
               <div className="dash-grid">
                 {SECTIONS.map((s) =>
                   best[s] !== undefined ? (
                     <span key={s} className="stat-chip">
-                      {SEC_META[s].badge.charAt(0) + SEC_META[s].badge.slice(1).toLowerCase()} · meilleur{' '}
+                      {t.sec[s].short} · {t.best}{' '}
                       <b className={best[s]! >= 70 ? 'hi' : best[s]! < 45 ? 'lo' : ''}>{best[s]}%</b>
                     </span>
                   ) : null,
                 )}
                 <span className="stat-chip">
-                  Sessions <b>{history.length}</b>
+                  {t.sessions} <b>{history.length}</b>
                 </span>
               </div>
               <div className="dash-foot">
-                <span className="hint">Progression et historique sont enregistrés sur cet appareil (localStorage).</span>
+                <span className="hint">{t.storageHint}</span>
                 <button className="btn btn-danger btn-sm" onClick={onReset}>
-                  Réinitialiser les données
+                  {t.resetData}
                 </button>
               </div>
             </div>
@@ -146,12 +128,10 @@ export function Intro({ history, onStart, onReset }: Props) {
       </div>
 
       <footer className="legal">
-        Outil d'entraînement indépendant, non affilié à SHL ni à EPSO. Les questions sont originales et conçues pour
-        reproduire les <i>formats</i> de raisonnement.
+        {t.footerLegal}
         <br />
-        Ressource officielle :{' '}
         <a className="plain" href="https://www.shl.com/products/assessments/cognitive-assessments/" target="_blank" rel="noopener noreferrer">
-          shl.com · cognitive assessments
+          {t.footerLinkLabel}
         </a>
       </footer>
     </>

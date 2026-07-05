@@ -1,42 +1,33 @@
-// Assemblage de la banque, métadonnées de section et normalisation des questions.
+// Assemblage de la banque (par langue) et normalisation des questions.
 import type { ExamSection, Question, RawQuestion, Section } from '../types'
-import { numeric } from '../data/numeric'
-import { verbal } from '../data/verbal'
-import { abstract } from '../data/abstract'
+import { numeric as numericFr } from '../data/numeric'
+import { verbal as verbalFr } from '../data/verbal'
+import { abstract as abstractFr } from '../data/abstract'
+import { numeric as numericEn } from '../data/en/numeric'
+import { verbal as verbalEn } from '../data/en/verbal'
+import { abstract as abstractEn } from '../data/en/abstract'
 import { figAria, renderFig } from './figures'
 
-export const BANK: Record<Section, RawQuestion[]> = {
-  num: numeric,
-  verb: verbal,
-  abs: abstract,
+export type Lang = 'en' | 'fr'
+
+const BANKS: Record<Lang, Record<Section, RawQuestion[]>> = {
+  fr: { num: numericFr, verb: verbalFr, abs: abstractFr },
+  en: { num: numericEn, verb: verbalEn, abs: abstractEn },
 }
 
-export interface SecMeta {
-  name: string
-  badge: string
-  min: number // budget-temps indicatif en minutes (mode chronomètre)
-  blurb: string
-}
+/** Budget-temps indicatif par section (minutes, mode chronomètre). Indépendant de la langue. */
+export const SEC_MIN: Record<ExamSection, number> = { num: 16, verb: 14, abs: 11, all: 40 }
 
-export const SEC_META: Record<ExamSection, SecMeta> = {
-  num: { name: 'Raisonnement numérique', badge: 'NUMÉRIQUE', min: 16, blurb: 'Tableaux, graphiques, pourcentages, ratios' },
-  verb: { name: 'Raisonnement verbal', badge: 'VERBAL', min: 14, blurb: 'Vrai / Faux / On ne peut pas savoir' },
-  abs: { name: 'Raisonnement abstrait', badge: 'ABSTRAIT', min: 11, blurb: 'Séries logiques, intrus, figures' },
-  all: { name: 'Test complet', badge: 'TEST COMPLET', min: 40, blurb: 'Les trois sections à la suite' },
-}
-
-/** Nombre de questions d'une section (ou du test complet). */
+/** Nombre de questions d'une section (identique dans les deux langues). */
 export function questionCount(sec: ExamSection): number {
-  return sec === 'all'
-    ? BANK.num.length + BANK.verb.length + BANK.abs.length
-    : BANK[sec].length
+  const b = BANKS.en
+  return sec === 'all' ? b.num.length + b.verb.length + b.abs.length : b[sec].length
 }
 
 /** Normalise une question brute en question affichable. */
-export function normalize(q: RawQuestion): Question {
+export function normalize(q: RawQuestion, lang: Lang): Question {
   if (q.kind === 'verbal') {
-    const stemHTML = `<div class="passage">${q.passage}</div><div class="statement">« ${q.statement} »</div>
-      <p class="ask">L'affirmation est-elle&nbsp;:</p>`
+    const stemHTML = `<div class="passage">${q.passage}</div><div class="statement">« ${q.statement} »</div>`
     return { sec: q.sec, tag: q.tag, stemHTML, options: q.options, correct: q.correct, explain: q.explain, fig: false }
   }
   if (q.kind === 'figure') {
@@ -52,7 +43,7 @@ export function normalize(q: RawQuestion): Question {
       tag: q.tag,
       stemHTML,
       options: q.options.map(renderFig),
-      optionAria: q.options.map(figAria),
+      optionAria: q.options.map((s) => figAria(s, lang)),
       correct: q.correct,
       explain: q.explain,
       fig: true,
@@ -61,8 +52,9 @@ export function normalize(q: RawQuestion): Question {
   return { sec: q.sec, tag: q.tag, stemHTML: q.stem, options: q.options, correct: q.correct, explain: q.explain, fig: false }
 }
 
-/** Construit la liste normalisée des questions d'une section. */
-export function buildQuestions(sec: ExamSection): Question[] {
-  const raw = sec === 'all' ? [...BANK.num, ...BANK.verb, ...BANK.abs] : [...BANK[sec]]
-  return raw.map(normalize)
+/** Construit la liste normalisée des questions d'une section, dans la langue donnée. */
+export function buildQuestions(sec: ExamSection, lang: Lang): Question[] {
+  const b = BANKS[lang]
+  const raw = sec === 'all' ? [...b.num, ...b.verb, ...b.abs] : [...b[sec]]
+  return raw.map((q) => normalize(q, lang))
 }

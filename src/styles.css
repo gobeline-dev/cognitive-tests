@@ -35,6 +35,15 @@ h1,h2,h3{font-family:"Libre Franklin",sans-serif; letter-spacing:-.01em; margin:
   text-transform:uppercase; color:var(--blue); font-weight:500;
 }
 .mast-txt h1{font-size:20px; font-weight:700; margin-top:1px}
+.mast .langtoggle{margin-left:auto;align-self:flex-start}
+
+/* ---------- Sélecteur de langue ---------- */
+.langtoggle{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface);flex:none}
+.langtoggle button{font:inherit;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.05em;
+  cursor:pointer;border:none;background:transparent;color:var(--ink-soft);padding:6px 11px;transition:.13s;min-height:34px}
+.langtoggle button:hover{background:var(--blue-wash);color:var(--blue)}
+.langtoggle button.on{background:var(--blue);color:#fff}
+.langtoggle button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 
 .card{
   background:var(--surface); border:1px solid var(--line); border-radius:var(--r);

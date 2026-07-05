@@ -1,8 +1,9 @@
 // Composant racine : machine à états (accueil / examen / résultats), chrono, persistance.
 import { useEffect, useMemo, useState } from 'react'
 import type { ExamMode, ExamSection, Session, Store } from './types'
-import { buildQuestions, SEC_META } from './lib/questions'
+import { buildQuestions, SEC_MIN, type Lang } from './lib/questions'
 import { useLocalStorage } from './lib/storage'
+import { useLang } from './i18n'
 import { Intro } from './components/Intro'
 import { Exam } from './components/Exam'
 import { Results } from './components/Results'
@@ -25,21 +26,20 @@ function shuffled(n: number): number[] {
  * l'abstrait (pour entraîner le raisonnement, pas la position), mais on conserve
  * l'ordre canonique Vrai / Faux / On ne peut pas savoir en verbal.
  */
-function makeOrders(sec: ExamSection): number[][] {
-  return buildQuestions(sec).map((q) => (q.sec === 'verb' ? q.options.map((_, i) => i) : shuffled(q.options.length)))
+function makeOrders(sec: ExamSection, lang: Lang): number[][] {
+  return buildQuestions(sec, lang).map((q) => (q.sec === 'verb' ? q.options.map((_, i) => i) : shuffled(q.options.length)))
 }
 
 /** Calcule le score et clôt la session (ajout à l'historique). Pur : dérivé de `prev`. */
-function markFinished(prev: Store, at: number): Store {
+function markFinished(prev: Store, at: number, lang: Lang): Store {
   if (!prev.session || prev.session.finished) return prev
   const s = prev.session
-  const qs = buildQuestions(s.sec)
+  const qs = buildQuestions(s.sec, lang)
   let correct = 0
   qs.forEach((q, i) => {
     if (s.answers[i] === q.correct) correct++
   })
   const total = qs.length
-  const finishedAt = at
   const record = {
     sec: s.sec,
     mode: s.mode,
@@ -47,19 +47,17 @@ function markFinished(prev: Store, at: number): Store {
     correct,
     total,
     pct: Math.round((correct / total) * 100),
-    durationMs: finishedAt - s.startedAt,
-    date: new Date(finishedAt).toISOString(),
+    durationMs: at - s.startedAt,
+    date: new Date(at).toISOString(),
   }
-  return {
-    session: { ...s, finished: true, finishedAt },
-    history: [record, ...prev.history].slice(0, 100),
-  }
+  return { session: { ...s, finished: true, finishedAt: at }, history: [record, ...prev.history].slice(0, 100) }
 }
 
 export default function App() {
+  const { lang, t } = useLang()
   const [store, setStore] = useLocalStorage<Store>(STORAGE_KEY, INIT)
   const session = store.session
-  const qs = useMemo(() => (session ? buildQuestions(session.sec) : []), [session?.sec])
+  const qs = useMemo(() => (session ? buildQuestions(session.sec, lang) : []), [session?.sec, lang])
 
   // Horloge : ne tourne qu'en examen chronométré non terminé.
   const [now, setNow] = useState(() => Date.now())
@@ -77,24 +75,24 @@ export default function App() {
   // Fin de temps → clôture automatique.
   useEffect(() => {
     if (chronoActive && remaining === 0) {
-      setStore((prev) => markFinished(prev, Date.now()))
+      setStore((prev) => markFinished(prev, Date.now(), lang))
     }
-  }, [chronoActive, remaining, setStore])
+  }, [chronoActive, remaining, setStore, lang])
 
   // --- Actions ---
   function start(sec: ExamSection, mode: ExamMode, chrono: boolean) {
-    const n = buildQuestions(sec).length
+    const n = buildQuestions(sec, lang).length
     const startedAt = Date.now()
     const s: Session = {
       sec,
       mode,
       chrono,
       answers: new Array(n).fill(null),
-      orders: makeOrders(sec),
+      orders: makeOrders(sec, lang),
       flagged: new Array(n).fill(false),
       idx: 0,
       startedAt,
-      deadline: chrono ? startedAt + SEC_META[sec].min * 60 * 1000 : null,
+      deadline: chrono ? startedAt + SEC_MIN[sec] * 60 * 1000 : null,
       finishedAt: null,
       finished: false,
     }
@@ -126,31 +124,30 @@ export default function App() {
   }
   function nextQ() {
     setStore((prev) =>
-      prev.session && prev.session.idx < qs.length - 1
-        ? { ...prev, session: { ...prev.session, idx: prev.session.idx + 1 } }
-        : prev,
+      prev.session && prev.session.idx < qs.length - 1 ? { ...prev, session: { ...prev.session, idx: prev.session.idx + 1 } } : prev,
     )
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   function finish() {
-    setStore((prev) => markFinished(prev, Date.now()))
+    setStore((prev) => markFinished(prev, Date.now(), lang))
     window.scrollTo(0, 0)
   }
   function retry() {
     setStore((prev) => {
       if (!prev.session) return prev
-      const n = buildQuestions(prev.session.sec).length
+      const sec = prev.session.sec
+      const n = buildQuestions(sec, lang).length
       const startedAt = Date.now()
       return {
         ...prev,
         session: {
           ...prev.session,
           answers: new Array(n).fill(null),
-          orders: makeOrders(prev.session.sec),
+          orders: makeOrders(sec, lang),
           flagged: new Array(n).fill(false),
           idx: 0,
           startedAt,
-          deadline: prev.session.chrono ? startedAt + SEC_META[prev.session.sec].min * 60 * 1000 : null,
+          deadline: prev.session.chrono ? startedAt + SEC_MIN[sec] * 60 * 1000 : null,
           finishedAt: null,
           finished: false,
         },
@@ -163,7 +160,7 @@ export default function App() {
     window.scrollTo(0, 0)
   }
   function reset() {
-    if (confirm('Réinitialiser toute la progression et l\'historique ? Cette action est irréversible.')) {
+    if (confirm(t.resetConfirm)) {
       setStore(INIT)
       window.scrollTo(0, 0)
     }

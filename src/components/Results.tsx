@@ -1,6 +1,6 @@
 // Écran de résultats : anneau de score, sous-scores, temps moyen, revue commentée.
 import type { Question, Session } from '../types'
-import { SEC_META } from '../lib/questions'
+import { useLang } from '../i18n'
 
 interface Props {
   session: Session
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function Results({ session, qs, onRetry, onHome }: Props) {
+  const { t } = useLang()
   const ans = session.answers
   let correct = 0
   const bySec: Record<string, { ok: number; tot: number }> = {}
@@ -23,7 +24,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   const total = qs.length
   const pct = Math.round((correct / total) * 100)
 
-  // Sous-score spécifique aux items « On ne peut pas savoir » (les plus prédictifs en verbal).
+  // Sous-score « Cannot say » (le plus prédictif en verbal).
   let onpsTot = 0
   let onpsOk = 0
   qs.forEach((q, i) => {
@@ -37,7 +38,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   const C = 2 * Math.PI * R
   const off = C * (1 - correct / total)
   const col = pct >= 70 ? 'var(--good)' : pct >= 45 ? 'var(--gold)' : 'var(--bad)'
-  const title = pct >= 70 ? 'Solide !' : pct >= 45 ? 'En progression' : 'À retravailler'
+  const title = pct >= 70 ? t.resGood : pct >= 45 ? t.resMid : t.resLow
 
   const durationMs = session.finishedAt && session.startedAt ? session.finishedAt - session.startedAt : null
   const avgSec = durationMs ? Math.round(durationMs / 1000 / total) : null
@@ -71,9 +72,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
             </svg>
           </div>
           <h2>{title}</h2>
-          <div className="sub">
-            {pct} % de bonnes réponses · {SEC_META[session.sec].name}
-          </div>
+          <div className="sub">{t.pctCorrect(pct, t.sec[session.sec].name)}</div>
         </div>
 
         <div className="subscores">
@@ -81,7 +80,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
             (['num', 'verb', 'abs'] as const).map((k) =>
               bySec[k] ? (
                 <span key={k} className="chip">
-                  {SEC_META[k].name.replace('Raisonnement ', '')}{' '}
+                  {t.sec[k].short}{' '}
                   <b>
                     {bySec[k].ok}/{bySec[k].tot}
                   </b>
@@ -89,17 +88,15 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
               ) : null,
             )}
           {onpsTot > 0 && (
-            <span className="chip" title="Items dont la bonne réponse est « On ne peut pas savoir » — le piège le plus prédictif en verbal">
-              « On ne peut pas savoir »{' '}
+            <span className="chip" title={t.cannotSayTitle}>
+              {t.cannotSayLabel}{' '}
               <b>
                 {onpsOk}/{onpsTot}
               </b>
             </span>
           )}
           {avgSec != null && (
-            <span className="chip">
-              Temps moyen / question <b>{avgSec}s</b>
-            </span>
+            <span className="chip" dangerouslySetInnerHTML={{ __html: t.avgTime(avgSec).replace(/(\d+s)$/, '<b>$1</b>') }} />
           )}
         </div>
 
@@ -108,29 +105,29 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
             const a = ans[i]
             const skipped = a === null
             const ok = a === q.correct
-            const optLabel = (j: number) => (q.fig ? `Réponse ${String.fromCharCode(65 + j)}` : q.options[j])
+            const optLabel = (j: number) => (q.fig ? t.answerLabel(String.fromCharCode(65 + j)) : q.options[j])
             return (
               <div key={i} className={'rev-item ' + (skipped ? 'skip' : ok ? 'ok' : 'ko')}>
                 <div className="rev-top">
-                  Q{i + 1} · {SEC_META[q.sec].badge} · {q.tag}
+                  Q{i + 1} · {t.sec[q.sec].badge} · {q.tag}
                   <span className={'verdict ' + (skipped ? 'skip' : ok ? 'ok' : 'ko')}>
-                    {skipped ? 'Non répondue' : ok ? 'Correct' : 'Incorrect'}
+                    {skipped ? t.notAnswered : ok ? t.vCorrect : t.vIncorrect}
                   </span>
                 </div>
                 <div className="rev-q" dangerouslySetInnerHTML={{ __html: q.stemHTML }} />
                 {!ok && !skipped && (
                   <div className="rev-line">
-                    <span className="lab">Votre réponse : </span>
+                    <span className="lab">{t.yourAnswer} </span>
                     <span className="you" dangerouslySetInnerHTML={{ __html: optLabel(a!) }} />
                   </div>
                 )}
                 <div className="rev-line">
-                  <span className="lab">Bonne réponse : </span>
+                  <span className="lab">{t.correctAnswer} </span>
                   <span className="cor" dangerouslySetInnerHTML={{ __html: optLabel(q.correct) }} />
                 </div>
                 {q.fig && (
                   <div className="rev-line" style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 6 }}>
-                    <span className="lab">Solution : </span>
+                    <span className="lab">{t.solution} </span>
                     <span
                       style={{ width: 54, height: 54, border: '1.5px solid var(--good)', borderRadius: 8, padding: 4, background: '#fff' }}
                       dangerouslySetInnerHTML={{ __html: q.options[q.correct] }}
@@ -138,7 +135,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
                   </div>
                 )}
                 <div className="explain">
-                  <b>Explication — </b>
+                  <b>{t.explanation}</b>
                   <span dangerouslySetInnerHTML={{ __html: q.explain }} />
                 </div>
               </div>
@@ -148,16 +145,14 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
 
         <div className="res-cta">
           <button className="btn btn-primary" onClick={onRetry}>
-            Recommencer cette section
+            {t.retry}
           </button>
           <button className="btn btn-ghost" onClick={onHome}>
-            Changer de section
+            {t.changeSection}
           </button>
         </div>
       </div>
-      <footer className="legal">
-        Revoyez chaque explication : la régularité de l'entraînement compte plus que le score d'un test isolé.
-      </footer>
+      <footer className="legal">{t.resultsFooter}</footer>
     </>
   )
 }

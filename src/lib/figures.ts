@@ -90,39 +90,46 @@ export function renderFig(spec: FigSpec): string {
   }
 }
 
-const POLY_NAMES: Record<number, string> = {
-  3: 'triangle',
-  4: 'carré',
-  5: 'pentagone',
-  6: 'hexagone',
-  7: 'heptagone',
-  8: 'octogone',
-  9: 'ennéagone',
-  10: 'décagone',
-}
-const CORNER_NAMES = ['coin haut-gauche', 'coin haut-droit', 'coin bas-droit', 'coin bas-gauche', 'centre']
+type Lang = 'en' | 'fr'
 
-function arrowDir(angle: number): string {
-  const dirs = ['le haut', 'le haut-droite', 'la droite', 'le bas-droite', 'le bas', 'le bas-gauche', 'la gauche', 'le haut-gauche']
-  return dirs[Math.round(((angle % 360) + 360) % 360 / 45) % 8]
+const POLY_NAMES: Record<Lang, Record<number, string>> = {
+  fr: { 3: 'triangle', 4: 'carré', 5: 'pentagone', 6: 'hexagone', 7: 'heptagone', 8: 'octogone', 9: 'ennéagone', 10: 'décagone' },
+  en: { 3: 'triangle', 4: 'square', 5: 'pentagon', 6: 'hexagon', 7: 'heptagon', 8: 'octagon', 9: 'nonagon', 10: 'decagon' },
+}
+const CORNER_NAMES: Record<Lang, string[]> = {
+  fr: ['coin haut-gauche', 'coin haut-droit', 'coin bas-droit', 'coin bas-gauche', 'centre'],
+  en: ['top-left corner', 'top-right corner', 'bottom-right corner', 'bottom-left corner', 'centre'],
+}
+const DIRS: Record<Lang, string[]> = {
+  fr: ['le haut', 'le haut-droite', 'la droite', 'le bas-droite', 'le bas', 'le bas-gauche', 'la gauche', 'le haut-gauche'],
+  en: ['up', 'up-right', 'right', 'down-right', 'down', 'down-left', 'left', 'up-left'],
+}
+
+function arrowDir(angle: number, lang: Lang): string {
+  return DIRS[lang][Math.round((((angle % 360) + 360) % 360) / 45) % 8]
 }
 
 /** Libellé accessible (aria-label) décrivant une figure. */
-export function figAria(spec: FigSpec): string {
+export function figAria(spec: FigSpec, lang: Lang = 'en'): string {
   const [g, ...a] = spec
+  const polyName = POLY_NAMES[lang][a[0] as number] ?? (lang === 'en' ? `${a[0]}-sided polygon` : `polygone à ${a[0]} côtés`)
   switch (g) {
     case 'arrow':
-      return `flèche pointant vers ${arrowDir(a[0] as number)}`
+      return lang === 'en' ? `arrow pointing ${arrowDir(a[0] as number, lang)}` : `flèche pointant vers ${arrowDir(a[0] as number, lang)}`
     case 'poly':
-      return POLY_NAMES[a[0] as number] ?? `polygone à ${a[0]} côtés`
+      return polyName
     case 'dotSquare':
-      return `carré avec un point au ${CORNER_NAMES[a[0] as number]}`
+      return lang === 'en'
+        ? `square with a dot in the ${CORNER_NAMES.en[a[0] as number]}`
+        : `carré avec un point au ${CORNER_NAMES.fr[a[0] as number]}`
     case 'shapeBars':
-      return `${a[0] ? 'triangle' : 'cercle'} au-dessus de ${a[1]} barres`
-    case 'polyDots': {
-      const name = POLY_NAMES[a[0] as number] ?? `polygone à ${a[0]} côtés`
-      return `${name} contenant ${a[1]} point${(a[1] as number) > 1 ? 's' : ''}`
-    }
+      return lang === 'en'
+        ? `${a[0] ? 'triangle' : 'circle'} above ${a[1]} bars`
+        : `${a[0] ? 'triangle' : 'cercle'} au-dessus de ${a[1]} barres`
+    case 'polyDots':
+      return lang === 'en'
+        ? `${polyName} containing ${a[1]} dot${(a[1] as number) > 1 ? 's' : ''}`
+        : `${polyName} contenant ${a[1]} point${(a[1] as number) > 1 ? 's' : ''}`
     default:
       return 'figure'
   }
