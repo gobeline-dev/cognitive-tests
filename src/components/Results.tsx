@@ -23,6 +23,16 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   const total = qs.length
   const pct = Math.round((correct / total) * 100)
 
+  // Sous-score spécifique aux items « On ne peut pas savoir » (les plus prédictifs en verbal).
+  let onpsTot = 0
+  let onpsOk = 0
+  qs.forEach((q, i) => {
+    if (q.sec === 'verb' && q.correct === 2) {
+      onpsTot++
+      if (ans[i] === q.correct) onpsOk++
+    }
+  })
+
   const R = 64
   const C = 2 * Math.PI * R
   const off = C * (1 - correct / total)
@@ -78,6 +88,14 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
                 </span>
               ) : null,
             )}
+          {onpsTot > 0 && (
+            <span className="chip" title="Items dont la bonne réponse est « On ne peut pas savoir » — le piège le plus prédictif en verbal">
+              « On ne peut pas savoir »{' '}
+              <b>
+                {onpsOk}/{onpsTot}
+              </b>
+            </span>
+          )}
           {avgSec != null && (
             <span className="chip">
               Temps moyen / question <b>{avgSec}s</b>

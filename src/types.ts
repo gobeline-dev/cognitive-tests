@@ -72,6 +72,10 @@ export interface Session {
   mode: ExamMode
   chrono: boolean
   answers: (number | null)[]
+  /** Ordre d'affichage des options par question : orders[q][position] = index d'option d'origine. */
+  orders: number[][]
+  /** Questions marquées « à revoir ». */
+  flagged: boolean[]
   idx: number
   deadline: number | null // horodatage d'échéance (ms epoch), null si sans chrono
   startedAt: number

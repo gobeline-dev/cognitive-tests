@@ -6,7 +6,19 @@ import { Emblem } from './Emblem'
 
 const ICONS: Record<ExamSection, React.ReactNode> = {
   num: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7h16M4 12h16M4 17h10" /></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <text
+        x="12"
+        y="17"
+        textAnchor="middle"
+        fontFamily="'IBM Plex Mono', monospace"
+        fontWeight="700"
+        fontSize="13"
+        letterSpacing="0.5"
+      >
+        123
+      </text>
+    </svg>
   ),
   verb: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16M4 12h16M4 18h9" /></svg>

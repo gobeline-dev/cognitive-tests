@@ -7,8 +7,27 @@ import { Intro } from './components/Intro'
 import { Exam } from './components/Exam'
 import { Results } from './components/Results'
 
-const STORAGE_KEY = 'cognitive-tests:v1'
+const STORAGE_KEY = 'cognitive-tests:v2'
 const INIT: Store = { session: null, history: [] }
+
+/** Mélange de Fisher-Yates (copie). */
+function shuffled(n: number): number[] {
+  const a = Array.from({ length: n }, (_, i) => i)
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+/**
+ * Ordre d'affichage des options par question. On randomise le numérique et
+ * l'abstrait (pour entraîner le raisonnement, pas la position), mais on conserve
+ * l'ordre canonique Vrai / Faux / On ne peut pas savoir en verbal.
+ */
+function makeOrders(sec: ExamSection): number[][] {
+  return buildQuestions(sec).map((q) => (q.sec === 'verb' ? q.options.map((_, i) => i) : shuffled(q.options.length)))
+}
 
 /** Calcule le score et clôt la session (ajout à l'historique). Pur : dérivé de `prev`. */
 function markFinished(prev: Store, at: number): Store {
@@ -71,6 +90,8 @@ export default function App() {
       mode,
       chrono,
       answers: new Array(n).fill(null),
+      orders: makeOrders(sec),
+      flagged: new Array(n).fill(false),
       idx: 0,
       startedAt,
       deadline: chrono ? startedAt + SEC_META[sec].min * 60 * 1000 : null,
@@ -85,6 +106,13 @@ export default function App() {
     setStore((prev) =>
       prev.session
         ? { ...prev, session: { ...prev.session, answers: prev.session.answers.map((a, j) => (j === prev.session!.idx ? i : a)) } }
+        : prev,
+    )
+  }
+  function toggleFlag(idx: number) {
+    setStore((prev) =>
+      prev.session
+        ? { ...prev, session: { ...prev.session, flagged: prev.session.flagged.map((f, j) => (j === idx ? !f : f)) } }
         : prev,
     )
   }
@@ -118,6 +146,8 @@ export default function App() {
         session: {
           ...prev.session,
           answers: new Array(n).fill(null),
+          orders: makeOrders(prev.session.sec),
+          flagged: new Array(n).fill(false),
           idx: 0,
           startedAt,
           deadline: prev.session.chrono ? startedAt + SEC_META[prev.session.sec].min * 60 * 1000 : null,
@@ -155,6 +185,7 @@ export default function App() {
           onPrev={prevQ}
           onNext={nextQ}
           onFinish={finish}
+          onToggleFlag={toggleFlag}
           onQuit={home}
         />
       )}

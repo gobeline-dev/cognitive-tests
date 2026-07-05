@@ -112,6 +112,11 @@ a.plain{color:var(--blue)}
   padding:12px 0 10px;margin-bottom:16px;border-bottom:1px solid var(--line);
 }
 .exambar .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar-right{display:flex;align-items:center;gap:10px}
+.pace{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.04em;padding:3px 9px;border-radius:20px;font-weight:500}
+.pace.ok{background:var(--good-wash);color:var(--good)}
+.pace.late{background:var(--bad-wash);color:var(--bad)}
+@media(max-width:480px){.pace{display:none}}
 .badge{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--blue);font-weight:500}
 .badge .mode{margin-left:8px;background:var(--gold);color:#3a2e02;padding:1px 7px;border-radius:20px;letter-spacing:.06em}
@@ -127,11 +132,20 @@ a.plain{color:var(--blue)}
 .star.cur svg{transform:scale(1.28)}
 .star:hover svg{transform:scale(1.28)}
 .star:focus-visible{outline:2px solid var(--blue-2);outline-offset:2px;border-radius:4px}
+.star.flagged::after{content:"";position:absolute;margin:-3px 0 0 12px;width:6px;height:6px;border-radius:50%;background:var(--bad)}
+.star{position:relative}
 
 /* ---------- Question ---------- */
 .q{padding:24px 24px 8px}
 .qmeta{font-family:"IBM Plex Mono";font-size:12px;color:var(--blue);letter-spacing:.05em;margin-bottom:12px}
 .qmeta .tag{background:var(--blue-wash);padding:2px 9px;border-radius:20px;margin-left:8px;letter-spacing:.1em;text-transform:uppercase;font-size:10.5px}
+.flagbtn{float:right;font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.03em;cursor:pointer;
+  background:none;border:1px solid var(--line);color:var(--ink-soft);border-radius:20px;padding:3px 10px;transition:.13s}
+.flagbtn:hover{border-color:var(--gold);color:var(--ink)}
+.flagbtn.on{background:#FBF3D6;border-color:var(--gold);color:#8a6d05;font-weight:600}
+.flagbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.consigne{background:#FBF3D6;border-radius:8px;padding:9px 12px;font-size:13px;color:#6b5403;margin:0 0 12px}
+.consigne b{color:#5a4602}
 .stem{font-size:17px;line-height:1.6}
 .stem p{margin:.4em 0}
 .stem .ask{color:var(--ink-soft);font-size:14px;margin:.4em 0 0}
