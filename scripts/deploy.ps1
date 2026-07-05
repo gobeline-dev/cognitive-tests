@@ -9,7 +9,7 @@ Write-Host "==> Build de production..." -ForegroundColor Cyan
 npm run build
 
 Write-Host "==> Publication sur la branche gh-pages..." -ForegroundColor Cyan
-npx gh-pages -d dist -t true
+npx gh-pages -d dist -t
 
 Write-Host "==> Terminé. Le site sera disponible sous quelques instants à :" -ForegroundColor Green
 Write-Host "    https://gobeline-dev.github.io/cognitive-tests/" -ForegroundColor Green
