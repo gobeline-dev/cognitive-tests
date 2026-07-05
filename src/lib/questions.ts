@@ -6,17 +6,21 @@ import { abstract as abstractFr } from '../data/abstract'
 import { numeric as numericEn } from '../data/en/numeric'
 import { verbal as verbalEn } from '../data/en/verbal'
 import { abstract as abstractEn } from '../data/en/abstract'
+import { extraFor } from '../data/extra'
 import { figAria, renderFig } from './figures'
 
 export type Lang = 'en' | 'fr'
 
+const extraFr = extraFor('fr')
+const extraEn = extraFor('en')
+
 const BANKS: Record<Lang, Record<Section, RawQuestion[]>> = {
-  fr: { num: numericFr, verb: verbalFr, abs: abstractFr },
-  en: { num: numericEn, verb: verbalEn, abs: abstractEn },
+  fr: { num: [...numericFr, ...extraFr.num], verb: [...verbalFr, ...extraFr.verb], abs: [...abstractFr, ...extraFr.abs] },
+  en: { num: [...numericEn, ...extraEn.num], verb: [...verbalEn, ...extraEn.verb], abs: [...abstractEn, ...extraEn.abs] },
 }
 
 /** Budget-temps indicatif par section (minutes, mode chronomètre). Indépendant de la langue. */
-export const SEC_MIN: Record<ExamSection, number> = { num: 16, verb: 14, abs: 11, all: 40 }
+export const SEC_MIN: Record<ExamSection, number> = { num: 20, verb: 20, abs: 15, all: 55 }
 
 /** Nombre de questions d'une section (identique dans les deux langues). */
 export function questionCount(sec: ExamSection): number {

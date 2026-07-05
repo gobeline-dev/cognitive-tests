@@ -76,6 +76,9 @@ export interface Strings {
   retry: string
   changeSection: string
   resultsFooter: string
+  byType: string
+  trend: string
+  perQuestionTime: (s: number) => string
   // App
   resetConfirm: string
 }
@@ -153,6 +156,9 @@ const EN: Strings = {
   retry: 'Retry this section',
   changeSection: 'Change section',
   resultsFooter: 'Review each explanation: regular practice matters more than the score of a single test.',
+  byType: 'Performance by question type',
+  trend: 'Trend',
+  perQuestionTime: (s) => `${s}s`,
   resetConfirm: 'Reset all progress and history? This action cannot be undone.',
 }
 
@@ -229,6 +235,9 @@ const FR: Strings = {
   retry: 'Recommencer cette section',
   changeSection: 'Changer de section',
   resultsFooter: "Revoyez chaque explication : la régularité de l'entraînement compte plus que le score d'un test isolé.",
+  byType: 'Performance par type de question',
+  trend: 'Évolution',
+  perQuestionTime: (s) => `${s}s`,
   resetConfirm: "Réinitialiser toute la progression et l'historique ? Cette action est irréversible.",
 }
 

@@ -42,6 +42,16 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
 
   const durationMs = session.finishedAt && session.startedAt ? session.finishedAt - session.startedAt : null
   const avgSec = durationMs ? Math.round(durationMs / 1000 / total) : null
+  const timeSpent = session.timeSpent ?? []
+
+  // Performance par type de question (tag) — pour cibler ses points faibles.
+  const byTag: Record<string, { ok: number; tot: number }> = {}
+  qs.forEach((q, i) => {
+    byTag[q.tag] = byTag[q.tag] || { ok: 0, tot: 0 }
+    byTag[q.tag].tot++
+    if (ans[i] === q.correct) byTag[q.tag].ok++
+  })
+  const tags = Object.entries(byTag).sort((a, b) => a[1].ok / a[1].tot - b[1].ok / b[1].tot)
 
   return (
     <>
@@ -100,6 +110,23 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
           )}
         </div>
 
+        <div className="bytype">
+          <h3>{t.byType}</h3>
+          <div className="bytype-grid">
+            {tags.map(([tag, s]) => {
+              const r = s.ok / s.tot
+              return (
+                <span key={tag} className={'stat-chip' + (r < 0.5 ? ' weak' : r >= 0.8 ? ' strong' : '')}>
+                  {tag}{' '}
+                  <b>
+                    {s.ok}/{s.tot}
+                  </b>
+                </span>
+              )
+            })}
+          </div>
+        </div>
+
         <div className="review">
           {qs.map((q, i) => {
             const a = ans[i]
@@ -113,6 +140,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
                   <span className={'verdict ' + (skipped ? 'skip' : ok ? 'ok' : 'ko')}>
                     {skipped ? t.notAnswered : ok ? t.vCorrect : t.vIncorrect}
                   </span>
+                  {timeSpent[i] > 0 && <span className="rev-time">⏱ {t.perQuestionTime(Math.round(timeSpent[i] / 1000))}</span>}
                 </div>
                 <div className="rev-q" dangerouslySetInnerHTML={{ __html: q.stemHTML }} />
                 {!ok && !skipped && (

@@ -76,6 +76,8 @@ export interface Session {
   orders: number[][]
   /** Questions marquées « à revoir ». */
   flagged: boolean[]
+  /** Temps cumulé passé sur chaque question (ms). */
+  timeSpent: number[]
   idx: number
   deadline: number | null // horodatage d'échéance (ms epoch), null si sans chrono
   startedAt: number

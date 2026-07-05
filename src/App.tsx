@@ -1,5 +1,5 @@
 // Composant racine : machine à états (accueil / examen / résultats), chrono, persistance.
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ExamMode, ExamSection, Session, Store } from './types'
 import { buildQuestions, SEC_MIN, type Lang } from './lib/questions'
 import { useLocalStorage } from './lib/storage'
@@ -28,6 +28,14 @@ function shuffled(n: number): number[] {
  */
 function makeOrders(sec: ExamSection, lang: Lang): number[][] {
   return buildQuestions(sec, lang).map((q) => (q.sec === 'verb' ? q.options.map((_, i) => i) : shuffled(q.options.length)))
+}
+
+/** Ajoute `d` ms au temps passé sur la question courante. Pur : dérivé de `prev`. */
+function addTime(prev: Store, d: number): Store {
+  if (!prev.session || d <= 0) return prev
+  const ts = (prev.session.timeSpent ?? new Array(prev.session.answers.length).fill(0)).slice()
+  ts[prev.session.idx] = (ts[prev.session.idx] ?? 0) + d
+  return { ...prev, session: { ...prev.session, timeSpent: ts } }
 }
 
 /** Calcule le score et clôt la session (ajout à l'historique). Pur : dérivé de `prev`. */
@@ -59,6 +67,15 @@ export default function App() {
   const session = store.session
   const qs = useMemo(() => (session ? buildQuestions(session.sec, lang) : []), [session?.sec, lang])
 
+  // Horodatage d'affichage de la question courante, pour mesurer le temps par question.
+  const viewRef = useRef(Date.now())
+  function elapsed() {
+    const t = Date.now()
+    const d = t - viewRef.current
+    viewRef.current = t
+    return d
+  }
+
   // Horloge : ne tourne qu'en examen chronométré non terminé.
   const [now, setNow] = useState(() => Date.now())
   const chronoActive = !!session && !session.finished && session.chrono && session.deadline != null
@@ -75,7 +92,8 @@ export default function App() {
   // Fin de temps → clôture automatique.
   useEffect(() => {
     if (chronoActive && remaining === 0) {
-      setStore((prev) => markFinished(prev, Date.now(), lang))
+      const d = elapsed()
+      setStore((prev) => markFinished(addTime(prev, d), Date.now(), lang))
     }
   }, [chronoActive, remaining, setStore, lang])
 
@@ -90,12 +108,14 @@ export default function App() {
       answers: new Array(n).fill(null),
       orders: makeOrders(sec, lang),
       flagged: new Array(n).fill(false),
+      timeSpent: new Array(n).fill(0),
       idx: 0,
       startedAt,
       deadline: chrono ? startedAt + SEC_MIN[sec] * 60 * 1000 : null,
       finishedAt: null,
       finished: false,
     }
+    viewRef.current = startedAt
     setStore((prev) => ({ ...prev, session: s }))
     window.scrollTo(0, 0)
   }
@@ -115,21 +135,36 @@ export default function App() {
     )
   }
   function goto(idx: number) {
-    setStore((prev) => (prev.session ? { ...prev, session: { ...prev.session, idx } } : prev))
+    const d = elapsed()
+    setStore((prev) => {
+      const p = addTime(prev, d)
+      return p.session ? { ...p, session: { ...p.session, idx } } : p
+    })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   function prevQ() {
-    setStore((prev) => (prev.session && prev.session.idx > 0 ? { ...prev, session: { ...prev.session, idx: prev.session.idx - 1 } } : prev))
+    if (!session || session.idx === 0) return
+    const d = elapsed()
+    setStore((prev) => {
+      if (!prev.session) return prev
+      const p = addTime(prev, d)
+      return { ...p, session: { ...p.session!, idx: Math.max(0, p.session!.idx - 1) } }
+    })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   function nextQ() {
-    setStore((prev) =>
-      prev.session && prev.session.idx < qs.length - 1 ? { ...prev, session: { ...prev.session, idx: prev.session.idx + 1 } } : prev,
-    )
+    if (!session || session.idx >= qs.length - 1) return
+    const d = elapsed()
+    setStore((prev) => {
+      if (!prev.session) return prev
+      const p = addTime(prev, d)
+      return { ...p, session: { ...p.session!, idx: p.session!.idx + 1 } }
+    })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   function finish() {
-    setStore((prev) => markFinished(prev, Date.now(), lang))
+    const d = elapsed()
+    setStore((prev) => markFinished(addTime(prev, d), Date.now(), lang))
     window.scrollTo(0, 0)
   }
   function retry() {
@@ -145,6 +180,7 @@ export default function App() {
           answers: new Array(n).fill(null),
           orders: makeOrders(sec, lang),
           flagged: new Array(n).fill(false),
+          timeSpent: new Array(n).fill(0),
           idx: 0,
           startedAt,
           deadline: prev.session.chrono ? startedAt + SEC_MIN[sec] * 60 * 1000 : null,
@@ -153,6 +189,7 @@ export default function App() {
         },
       }
     })
+    viewRef.current = Date.now()
     window.scrollTo(0, 0)
   }
   function home() {

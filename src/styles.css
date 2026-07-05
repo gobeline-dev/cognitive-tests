@@ -227,7 +227,25 @@ svg.fig{width:100%;height:100%;display:block}
 .verdict.ok{background:var(--good-wash);color:var(--good)}
 .verdict.ko{background:var(--bad-wash);color:var(--bad)}
 .verdict.skip{background:#FBF3D6;color:#8a6d05}
+.rev-time{margin-left:auto;font-family:"IBM Plex Mono";font-size:11.5px;color:var(--ink-soft)}
 .rev-q{font-size:15px;margin-bottom:8px}
+
+/* Performance par type de question */
+.bytype{padding:6px 24px 4px}
+.bytype h3{font-family:"Libre Franklin";font-size:14px;font-weight:600;margin:0 0 10px;color:var(--ink)}
+.bytype-grid{display:flex;flex-wrap:wrap;gap:8px}
+.stat-chip.weak{border-color:var(--bad);background:var(--bad-wash)}
+.stat-chip.weak b{color:var(--bad)}
+.stat-chip.strong{border-color:var(--good);background:var(--good-wash)}
+.stat-chip.strong b{color:var(--good)}
+
+/* Courbe d'évolution (dashboard) */
+.trend{border-top:1px dashed var(--line);padding-top:12px;margin-bottom:12px;display:flex;flex-direction:column;gap:8px}
+.trend-lab{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.trend-row{display:flex;align-items:center;gap:10px}
+.trend-sec{font-size:13px;color:var(--ink-soft);width:74px;flex:none}
+.spark{flex:none}
+.trend-last{font-family:"IBM Plex Mono";font-size:12.5px;font-weight:600;color:var(--blue)}
 .rev-line{font-size:14px;margin:3px 0}
 .rev-line .lab{color:var(--ink-soft)}
 .rev-line .you{color:var(--bad);font-weight:600}

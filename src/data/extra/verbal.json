@@ -1,0 +1,82 @@
+[
+  {
+    "tagFr": "Quantificateur", "tagEn": "Quantifier",
+    "passageFr": "Le Fonds européen de développement régional (FEDER) finance des projets d'infrastructure dans les régions dont le PIB par habitant est inférieur à 75 % de la moyenne de l'Union. Pour la période 2021-2027, une région éligible peut recevoir un cofinancement européen couvrant jusqu'à 85 % du coût total d'un projet, le reste devant être apporté par les autorités nationales ou régionales. Les demandes de subvention sont examinées par un comité de sélection qui se réunit deux fois par an.",
+    "passageEn": "The European Regional Development Fund (ERDF) finances infrastructure projects in regions whose GDP per capita is below 75% of the Union average. For the 2021-2027 period, an eligible region may receive European co-financing covering up to 85% of a project's total cost, with the remainder to be provided by national or regional authorities. Grant applications are examined by a selection committee that meets twice a year.",
+    "statementFr": "Toutes les régions de l'Union peuvent bénéficier d'un cofinancement du FEDER.",
+    "statementEn": "All regions of the Union can benefit from ERDF co-financing.",
+    "correct": 1,
+    "explainFr": "Le passage limite le financement aux régions &lt;i&gt;« dont le PIB par habitant est inférieur à 75 % de la moyenne de l'Union »&lt;/i&gt;. Le quantificateur &lt;b&gt;« toutes les régions »&lt;/b&gt; contredit cette restriction : l'affirmation est &lt;b&gt;fausse&lt;/b&gt;.",
+    "explainEn": "The passage restricts financing to regions &lt;i&gt;\"whose GDP per capita is below 75% of the Union average\"&lt;/i&gt;. The quantifier &lt;b&gt;\"all regions\"&lt;/b&gt; contradicts this restriction, so the statement is &lt;b&gt;false&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Vrai/Faux", "tagEn": "True/False",
+    "passageFr": "Le Fonds européen de développement régional (FEDER) finance des projets d'infrastructure dans les régions dont le PIB par habitant est inférieur à 75 % de la moyenne de l'Union. Pour la période 2021-2027, une région éligible peut recevoir un cofinancement européen couvrant jusqu'à 85 % du coût total d'un projet, le reste devant être apporté par les autorités nationales ou régionales. Les demandes de subvention sont examinées par un comité de sélection qui se réunit deux fois par an.",
+    "passageEn": "The European Regional Development Fund (ERDF) finances infrastructure projects in regions whose GDP per capita is below 75% of the Union average. For the 2021-2027 period, an eligible region may receive European co-financing covering up to 85% of a project's total cost, with the remainder to be provided by national or regional authorities. Grant applications are examined by a selection committee that meets twice a year.",
+    "statementFr": "Lorsqu'un projet est cofinancé à hauteur de 85 % par l'Union, au moins 15 % du coût doit provenir d'autorités nationales ou régionales.",
+    "statementEn": "When a project is co-financed at 85% by the Union, at least 15% of the cost must come from national or regional authorities.",
+    "correct": 0,
+    "explainFr": "Le texte précise que le cofinancement couvre &lt;i&gt;« jusqu'à 85 % du coût total »&lt;/i&gt;, &lt;b&gt;« le reste devant être apporté par les autorités nationales ou régionales »&lt;/b&gt;. Si l'UE finance 85 %, les 15 % restants relèvent bien de ces autorités : l'affirmation est &lt;b&gt;vraie&lt;/b&gt;.",
+    "explainEn": "The text states co-financing covers &lt;i&gt;\"up to 85% of the total cost\"&lt;/i&gt;, with &lt;b&gt;\"the remainder to be provided by national or regional authorities\"&lt;/b&gt;. If the EU funds 85%, the remaining 15% falls to those authorities, so the statement is &lt;b&gt;true&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Piège", "tagEn": "Trap",
+    "passageFr": "Le Fonds européen de développement régional (FEDER) finance des projets d'infrastructure dans les régions dont le PIB par habitant est inférieur à 75 % de la moyenne de l'Union. Pour la période 2021-2027, une région éligible peut recevoir un cofinancement européen couvrant jusqu'à 85 % du coût total d'un projet, le reste devant être apporté par les autorités nationales ou régionales. Les demandes de subvention sont examinées par un comité de sélection qui se réunit deux fois par an.",
+    "passageEn": "The European Regional Development Fund (ERDF) finances infrastructure projects in regions whose GDP per capita is below 75% of the Union average. For the 2021-2027 period, an eligible region may receive European co-financing covering up to 85% of a project's total cost, with the remainder to be provided by national or regional authorities. Grant applications are examined by a selection committee that meets twice a year.",
+    "statementFr": "Le comité de sélection se réunit plus souvent que le Parlement européen.",
+    "statementEn": "The selection committee meets more often than the European Parliament.",
+    "correct": 2,
+    "explainFr": "Le passage indique que le comité &lt;i&gt;« se réunit deux fois par an »&lt;/i&gt;, mais ne mentionne &lt;b&gt;aucune information sur la fréquence des réunions du Parlement européen&lt;/b&gt;. La comparaison est impossible à partir du texte : &lt;b&gt;on ne peut pas savoir&lt;/b&gt;.",
+    "explainEn": "The passage states the committee &lt;i&gt;\"meets twice a year\"&lt;/i&gt; but gives &lt;b&gt;no information about how often the European Parliament meets&lt;/b&gt;. The comparison cannot be made from the text, so the answer is &lt;b&gt;cannot say&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Vrai/Faux", "tagEn": "True/False",
+    "passageFr": "Conformément aux règles de passation des marchés publics, tout marché de services d'une valeur supérieure à 140 000 euros doit faire l'objet d'un avis publié au Journal officiel de l'Union européenne. Les soumissionnaires disposent d'un délai minimal de 35 jours à compter de la publication pour remettre leur offre. Le marché est attribué à l'offre économiquement la plus avantageuse, évaluée selon le prix et la qualité technique.",
+    "passageEn": "In accordance with public procurement rules, any services contract worth more than 140,000 euros must be the subject of a notice published in the Official Journal of the European Union. Tenderers have a minimum period of 35 days from publication to submit their bid. The contract is awarded to the most economically advantageous tender, assessed on price and technical quality.",
+    "statementFr": "Un marché de services d'une valeur de 90 000 euros doit obligatoirement être publié au Journal officiel de l'Union européenne.",
+    "statementEn": "A services contract worth 90,000 euros must compulsorily be published in the Official Journal of the European Union.",
+    "correct": 1,
+    "explainFr": "L'obligation de publication ne vise que les marchés &lt;i&gt;« d'une valeur supérieure à 140 000 euros »&lt;/i&gt;. Un marché de &lt;b&gt;90 000 euros est en dessous de ce seuil&lt;/b&gt; et n'est donc pas soumis à cette obligation : l'affirmation est &lt;b&gt;fausse&lt;/b&gt;.",
+    "explainEn": "The publication requirement applies only to contracts &lt;i&gt;\"worth more than 140,000 euros\"&lt;/i&gt;. A &lt;b&gt;90,000 euro contract is below that threshold&lt;/b&gt; and is therefore not subject to the requirement, so the statement is &lt;b&gt;false&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Piège", "tagEn": "Trap",
+    "passageFr": "Conformément aux règles de passation des marchés publics, tout marché de services d'une valeur supérieure à 140 000 euros doit faire l'objet d'un avis publié au Journal officiel de l'Union européenne. Les soumissionnaires disposent d'un délai minimal de 35 jours à compter de la publication pour remettre leur offre. Le marché est attribué à l'offre économiquement la plus avantageuse, évaluée selon le prix et la qualité technique.",
+    "passageEn": "In accordance with public procurement rules, any services contract worth more than 140,000 euros must be the subject of a notice published in the Official Journal of the European Union. Tenderers have a minimum period of 35 days from publication to submit their bid. The contract is awarded to the most economically advantageous tender, assessed on price and technical quality.",
+    "statementFr": "Le marché est toujours attribué à l'offre la moins chère.",
+    "statementEn": "The contract is always awarded to the cheapest tender.",
+    "correct": 1,
+    "explainFr": "Le texte précise que le marché est attribué à &lt;i&gt;« l'offre économiquement la plus avantageuse, évaluée selon le prix &lt;b&gt;et la qualité technique&lt;/b&gt; »&lt;/i&gt;. Le prix n'est pas le seul critère : l'offre la moins chère n'est donc pas &lt;b&gt;toujours&lt;/b&gt; retenue. L'affirmation est &lt;b&gt;fausse&lt;/b&gt;.",
+    "explainEn": "The text states the contract is awarded to &lt;i&gt;\"the most economically advantageous tender, assessed on price &lt;b&gt;and technical quality&lt;/b&gt;\"&lt;/i&gt;. Price is not the sole criterion, so the cheapest bid is not &lt;b&gt;always&lt;/b&gt; chosen. The statement is &lt;b&gt;false&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Logique", "tagEn": "Logic",
+    "passageFr": "Conformément aux règles de passation des marchés publics, tout marché de services d'une valeur supérieure à 140 000 euros doit faire l'objet d'un avis publié au Journal officiel de l'Union européenne. Les soumissionnaires disposent d'un délai minimal de 35 jours à compter de la publication pour remettre leur offre. Le marché est attribué à l'offre économiquement la plus avantageuse, évaluée selon le prix et la qualité technique.",
+    "passageEn": "In accordance with public procurement rules, any services contract worth more than 140,000 euros must be the subject of a notice published in the Official Journal of the European Union. Tenderers have a minimum period of 35 days from publication to submit their bid. The contract is awarded to the most economically advantageous tender, assessed on price and technical quality.",
+    "statementFr": "Une offre remise 40 jours après la publication de l'avis respecte le délai minimal prévu.",
+    "statementEn": "A bid submitted 40 days after publication of the notice respects the minimum period provided for.",
+    "correct": 0,
+    "explainFr": "Le passage fixe un &lt;i&gt;« délai minimal de 35 jours à compter de la publication »&lt;/i&gt;. Comme &lt;b&gt;40 jours est supérieur à 35 jours&lt;/b&gt;, le délai minimal est bien respecté : l'affirmation est &lt;b&gt;vraie&lt;/b&gt;.",
+    "explainEn": "The passage sets a &lt;i&gt;\"minimum period of 35 days from publication\"&lt;/i&gt;. Since &lt;b&gt;40 days is greater than 35 days&lt;/b&gt;, the minimum period is respected, so the statement is &lt;b&gt;true&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Corrélation ≠ cause", "tagEn": "Correlation ≠ cause",
+    "passageFr": "Selon le rapport annuel de l'agence, le programme Erasmus+ a permis à 32 000 étudiants d'effectuer une mobilité à l'étranger en 2023, soit une augmentation de 8 % par rapport à 2022. La durée moyenne d'un séjour était de cinq mois. Les bourses versées aux participants variaient en fonction du pays d'accueil.",
+    "passageEn": "According to the agency's annual report, the Erasmus+ programme enabled 32,000 students to undertake a mobility abroad in 2023, an increase of 8% compared with 2022. The average length of a stay was five months. The grants paid to participants varied depending on the host country.",
+    "statementFr": "La hausse de 8 % du nombre de participants s'explique par l'augmentation du montant des bourses.",
+    "statementEn": "The 8% rise in the number of participants is explained by the increase in the amount of the grants.",
+    "correct": 2,
+    "explainFr": "Le texte mentionne une &lt;i&gt;« augmentation de 8 % »&lt;/i&gt; et le fait que les bourses &lt;i&gt;« variaient en fonction du pays d'accueil »&lt;/i&gt;, mais &lt;b&gt;n'établit aucun lien de cause à effet&lt;/b&gt; entre les deux. Attribuer la hausse aux bourses est une inférence non justifiée : &lt;b&gt;on ne peut pas savoir&lt;/b&gt;.",
+    "explainEn": "The text mentions an &lt;i&gt;\"increase of 8%\"&lt;/i&gt; and that grants &lt;i&gt;\"varied depending on the host country\"&lt;/i&gt;, but &lt;b&gt;establishes no cause-and-effect link&lt;/b&gt; between the two. Attributing the rise to the grants is an unjustified inference, so the answer is &lt;b&gt;cannot say&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Logique", "tagEn": "Logic",
+    "passageFr": "Selon le rapport annuel de l'agence, le programme Erasmus+ a permis à 32 000 étudiants d'effectuer une mobilité à l'étranger en 2023, soit une augmentation de 8 % par rapport à 2022. La durée moyenne d'un séjour était de cinq mois. Les bourses versées aux participants variaient en fonction du pays d'accueil.",
+    "passageEn": "According to the agency's annual report, the Erasmus+ programme enabled 32,000 students to undertake a mobility abroad in 2023, an increase of 8% compared with 2022. The average length of a stay was five months. The grants paid to participants varied depending on the host country.",
+    "statementFr": "En 2023, la durée moyenne d'un séjour Erasmus+ dépassait quatre mois.",
+    "statementEn": "In 2023, the average length of an Erasmus+ stay exceeded four months.",
+    "correct": 0,
+    "explainFr": "Le passage indique que &lt;i&gt;« la durée moyenne d'un séjour était de cinq mois »&lt;/i&gt;. Comme &lt;b&gt;cinq mois est supérieur à quatre mois&lt;/b&gt;, l'affirmation est &lt;b&gt;vraie&lt;/b&gt;.",
+    "explainEn": "The passage states that &lt;i&gt;\"the average length of a stay was five months\"&lt;/i&gt;. Since &lt;b&gt;five months is greater than four months&lt;/b&gt;, the statement is &lt;b&gt;true&lt;/b&gt;."
+  }
+]

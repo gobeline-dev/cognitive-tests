@@ -5,6 +5,7 @@ import { questionCount, SEC_MIN } from '../lib/questions'
 import { useLang } from '../i18n'
 import { Emblem } from './Emblem'
 import { LangToggle } from './LangToggle'
+import { Sparkline } from './Sparkline'
 
 const ICONS: Record<ExamSection, React.ReactNode> = {
   num: (
@@ -42,6 +43,12 @@ export function Intro({ history, onStart, onReset }: Props) {
   const best: Partial<Record<ExamSection, number>> = {}
   history.forEach((h) => {
     if (best[h.sec] === undefined || h.pct > best[h.sec]!) best[h.sec] = h.pct
+  })
+
+  // Historique par section, du plus ancien au plus récent (pour la courbe d'évolution).
+  const trend: Partial<Record<ExamSection, number[]>> = {}
+  ;[...history].reverse().forEach((h) => {
+    ;(trend[h.sec] ||= []).push(h.pct)
   })
 
   return (
@@ -116,6 +123,20 @@ export function Intro({ history, onStart, onReset }: Props) {
                   {t.sessions} <b>{history.length}</b>
                 </span>
               </div>
+              {SECTIONS.some((s) => (trend[s]?.length ?? 0) >= 2) && (
+                <div className="trend">
+                  <span className="trend-lab">{t.trend}</span>
+                  {SECTIONS.map((s) =>
+                    (trend[s]?.length ?? 0) >= 2 ? (
+                      <span key={s} className="trend-row">
+                        <span className="trend-sec">{t.sec[s].short}</span>
+                        <Sparkline points={trend[s]!} />
+                        <span className="trend-last">{trend[s]![trend[s]!.length - 1]}%</span>
+                      </span>
+                    ) : null,
+                  )}
+                </div>
+              )}
               <div className="dash-foot">
                 <span className="hint">{t.storageHint}</span>
                 <button className="btn btn-danger btn-sm" onClick={onReset}>

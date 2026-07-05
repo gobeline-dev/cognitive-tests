@@ -1,0 +1,62 @@
+[
+  {
+    "tagFr": "Série", "tagEn": "Series",
+    "type": "serie",
+    "promptFr": "Quelle figure complète logiquement la série ?", "promptEn": "Which figure logically completes the series?",
+    "series": [["arrow", 180], ["arrow", 135], ["arrow", 90], ["arrow", 45]],
+    "options": [["arrow", 0], ["arrow", 45], ["arrow", 315], ["arrow", 90], ["arrow", 270]],
+    "correct": 0,
+    "explainFr": "La flèche tourne de &lt;b&gt;45° dans le sens anti-horaire&lt;/b&gt; à chaque étape : 180°, 135°, 90°, 45°… la suivante pointe donc vers le &lt;b&gt;haut (0°)&lt;/b&gt;.",
+    "explainEn": "The arrow rotates &lt;b&gt;45° counter-clockwise&lt;/b&gt; at each step: 180°, 135°, 90°, 45°… so the next one points &lt;b&gt;up (0°)&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Série", "tagEn": "Series",
+    "type": "serie",
+    "promptFr": "Quelle figure vient ensuite ?", "promptEn": "Which figure comes next?",
+    "series": [["shapeBars", true, 9], ["shapeBars", true, 7], ["shapeBars", true, 5], ["shapeBars", true, 3]],
+    "options": [["shapeBars", true, 1], ["shapeBars", true, 2], ["shapeBars", false, 1], ["shapeBars", true, 3], ["shapeBars", true, 5]],
+    "correct": 0,
+    "explainFr": "La forme (triangle) reste constante et le &lt;b&gt;nombre de barres diminue de 2&lt;/b&gt; : 9, 7, 5, 3… la suivante est un &lt;b&gt;triangle au-dessus de 1 barre&lt;/b&gt;.",
+    "explainEn": "The shape (triangle) stays constant and the &lt;b&gt;number of bars decreases by 2&lt;/b&gt;: 9, 7, 5, 3… so next is a &lt;b&gt;triangle above 1 bar&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Série", "tagEn": "Series",
+    "type": "serie",
+    "promptFr": "Quelle figure complète la série ?", "promptEn": "Which figure completes the series?",
+    "series": [["polyDots", 4, 8], ["polyDots", 4, 7], ["polyDots", 4, 6], ["polyDots", 4, 5]],
+    "options": [["polyDots", 4, 4], ["polyDots", 4, 5], ["polyDots", 5, 4], ["polyDots", 4, 3], ["polyDots", 4, 6]],
+    "correct": 0,
+    "explainFr": "Le polygone reste un &lt;b&gt;carré (4 côtés)&lt;/b&gt; et le &lt;b&gt;nombre de points diminue de 1&lt;/b&gt; : 8, 7, 6, 5… la suivante contient &lt;b&gt;4 points&lt;/b&gt;.",
+    "explainEn": "The polygon stays a &lt;b&gt;square (4 sides)&lt;/b&gt; and the &lt;b&gt;number of dots decreases by 1&lt;/b&gt;: 8, 7, 6, 5… so next contains &lt;b&gt;4 dots&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Deux règles", "tagEn": "Two rules",
+    "type": "serie",
+    "promptFr": "Deux règles évoluent en sens opposés. Quelle figure suit ?", "promptEn": "Two rules evolve in opposite directions. Which figure comes next?",
+    "series": [["polyDots", 3, 6], ["polyDots", 4, 5], ["polyDots", 5, 4], ["polyDots", 6, 3]],
+    "options": [["polyDots", 7, 2], ["polyDots", 7, 3], ["polyDots", 6, 2], ["polyDots", 8, 2], ["polyDots", 7, 1]],
+    "correct": 0,
+    "explainFr": "Deux règles simultanées : le &lt;b&gt;nombre de côtés augmente de 1&lt;/b&gt; (3, 4, 5, 6) tandis que le &lt;b&gt;nombre de points diminue de 1&lt;/b&gt; (6, 5, 4, 3). La suivante est un &lt;b&gt;heptagone (7 côtés) contenant 2 points&lt;/b&gt;.",
+    "explainEn": "Two simultaneous rules: the &lt;b&gt;number of sides increases by 1&lt;/b&gt; (3, 4, 5, 6) while the &lt;b&gt;number of dots decreases by 1&lt;/b&gt; (6, 5, 4, 3). Next is a &lt;b&gt;heptagon (7 sides) containing 2 dots&lt;/b&gt;."
+  },
+  {
+    "tagFr": "Intrus", "tagEn": "Odd one out",
+    "type": "intrus",
+    "promptFr": "Quatre figures respectent une relation entre côtés et points, une seule non. Laquelle est l'&lt;b&gt;intrus&lt;/b&gt; ?", "promptEn": "Four figures follow a relation between sides and dots, only one does not. Which is the &lt;b&gt;odd one out&lt;/b&gt;?",
+    "series": null,
+    "options": [["polyDots", 3, 4], ["polyDots", 4, 5], ["polyDots", 6, 6], ["polyDots", 5, 6], ["polyDots", 7, 8]],
+    "correct": 2,
+    "explainFr": "Règle : le &lt;b&gt;nombre de points = nombre de côtés + 1&lt;/b&gt; (3→4, 4→5, 5→6, 7→8). L'hexagone (6 côtés) devrait contenir 7 points mais en contient &lt;b&gt;6&lt;/b&gt; : c'est l'intrus.",
+    "explainEn": "Rule: the &lt;b&gt;number of dots = number of sides + 1&lt;/b&gt; (3→4, 4→5, 5→6, 7→8). The hexagon (6 sides) should contain 7 dots but contains &lt;b&gt;6&lt;/b&gt;: it is the odd one out."
+  },
+  {
+    "tagFr": "Intrus", "tagEn": "Odd one out",
+    "type": "intrus",
+    "promptFr": "Quatre figures partagent la même règle cachée, une seule y échappe. Laquelle est l'&lt;b&gt;intrus&lt;/b&gt; ?", "promptEn": "Four figures share the same hidden rule, only one breaks it. Which is the &lt;b&gt;odd one out&lt;/b&gt;?",
+    "series": null,
+    "options": [["polyDots", 4, 2], ["polyDots", 6, 3], ["polyDots", 8, 3], ["polyDots", 8, 4], ["polyDots", 10, 5]],
+    "correct": 2,
+    "explainFr": "Règle : le &lt;b&gt;nombre de points = la moitié du nombre de côtés&lt;/b&gt; (4→2, 6→3, 8→4, 10→5). L'octogone (8 côtés) devrait contenir 4 points mais n'en contient que &lt;b&gt;3&lt;/b&gt; : c'est l'intrus.",
+    "explainEn": "Rule: the &lt;b&gt;number of dots = half the number of sides&lt;/b&gt; (4→2, 6→3, 8→4, 10→5). The octagon (8 sides) should contain 4 dots but has only &lt;b&gt;3&lt;/b&gt;: it is the odd one out."
+  }
+]

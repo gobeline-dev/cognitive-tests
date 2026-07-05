@@ -20,23 +20,26 @@ CE QUE FAIT L'APPLICATION
 -------------------------
 Trois familles de tests cognitifs, plus un test complet :
 
-  • Raisonnement numérique (16 questions)
+  • Raisonnement numérique (22 questions)
     Tableaux, graphiques, pourcentages, variations successives,
     moyennes (dont moyenne harmonique), ratios, taux, indices,
-    règle de trois. Contexte européen (budgets, agences, énergie,
-    démographie, concours).
+    règle de trois, taux de change, TVA, balance commerciale, taux
+    d'exécution. Contexte européen (budgets, agences, énergie,
+    démographie, concours, marchés).
 
-  • Raisonnement verbal (16 questions)
+  • Raisonnement verbal (24 questions)
     Format « Vrai / Faux / On ne peut pas savoir ». On juge
     UNIQUEMENT d'après le passage fourni, jamais avec des
     connaissances extérieures. Pièges classiques : information
     absente, corrélation ≠ causalité, quantificateurs (« seuls »,
     « aucun », « plus de », « au moins »), bornes strictes/inclusives.
 
-  • Raisonnement abstrait / inductif (12 questions)
+  • Raisonnement abstrait / inductif (18 questions)
     Séries logiques, intrus, figures géométriques générées en SVG :
-    rotation, incrémentation, déplacements, doubles règles, relations
-    côtés/points.
+    rotation horaire/anti-horaire, incrémentation/décrémentation,
+    déplacements, doubles règles, relations côtés/points.
+
+  Soit 64 questions au total (test complet).
 
 Fonctionnalités clés :
   • Bilingue anglais / français, ANGLAIS PAR DÉFAUT, bascule EN/FR
@@ -48,6 +51,11 @@ Fonctionnalités clés :
   • Chronomètre optionnel (budget-temps réaliste par section).
   • Correction commentée : chaque question est expliquée pas à pas,
     les pièges sont signalés, dans un langage accessible à tous.
+  • Statistiques : score, sous-score « On ne peut pas savoir »,
+    performance PAR TYPE DE QUESTION, temps par question, et courbe
+    d'évolution du score par section (tableau de bord).
+  • Ordre des options randomisé (numérique/abstrait) pour entraîner
+    le raisonnement plutôt que la mémorisation de position.
   • Navigation libre : boutons Précédent/Suivant, étoiles de
     progression cliquables, ou clavier (touches A–E, flèches ← →).
   • Garde-fou avant de terminer si des questions restent sans réponse.
@@ -90,9 +98,14 @@ STRUCTURE DU PROJET
       en/numeric.ts          16 questions numériques (EN)
       en/verbal.ts           16 questions verbales (EN)
       en/abstract.ts         12 questions abstraites (EN, réutilise les figures)
+      extra.ts               Chargeur du contenu additionnel bilingue
+      extra/numeric.json     +6 questions numériques (FR+EN)
+      extra/verbal.json      +8 questions verbales (FR+EN)
+      extra/abstract.json    +6 questions abstraites (FR+EN)
     components/
       Emblem.tsx             Emblème (anneau d'étoiles)
       LangToggle.tsx         Sélecteur de langue EN/FR
+      Sparkline.tsx          Mini-courbe d'évolution des scores
       Intro.tsx              Écran d'accueil + tableau de bord
       Exam.tsx               Écran d'examen (question, chrono, clavier)
       Results.tsx            Écran de résultats + revue commentée

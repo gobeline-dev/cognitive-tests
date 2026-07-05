@@ -1,0 +1,68 @@
+[
+  {
+    "tagFr": "Taux de chômage",
+    "tagEn": "Unemployment rate",
+    "stemFr": "&lt;table class=\"data\"&gt;&lt;caption&gt;Population active et chômeurs dans cinq États membres (milliers)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;État membre&lt;/th&gt;&lt;th&gt;Population active&lt;/th&gt;&lt;th&gt;Chômeurs&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Belgique&lt;/td&gt;&lt;td&gt;6 000&lt;/td&gt;&lt;td&gt;360&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Portugal&lt;/td&gt;&lt;td&gt;5 000&lt;/td&gt;&lt;td&gt;325&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Grèce&lt;/td&gt;&lt;td&gt;4 800&lt;/td&gt;&lt;td&gt;288&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Autriche&lt;/td&gt;&lt;td&gt;4 500&lt;/td&gt;&lt;td&gt;270&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Irlande&lt;/td&gt;&lt;td&gt;2 600&lt;/td&gt;&lt;td&gt;143&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Quel pays affiche le &lt;b&gt;taux de chômage&lt;/b&gt; le plus élevé ?&lt;/p&gt;",
+    "stemEn": "&lt;table class=\"data\"&gt;&lt;caption&gt;Labour force and unemployed in five Member States (thousands)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Member State&lt;/th&gt;&lt;th&gt;Labour force&lt;/th&gt;&lt;th&gt;Unemployed&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Belgium&lt;/td&gt;&lt;td&gt;6,000&lt;/td&gt;&lt;td&gt;360&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Portugal&lt;/td&gt;&lt;td&gt;5,000&lt;/td&gt;&lt;td&gt;325&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Greece&lt;/td&gt;&lt;td&gt;4,800&lt;/td&gt;&lt;td&gt;288&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Austria&lt;/td&gt;&lt;td&gt;4,500&lt;/td&gt;&lt;td&gt;270&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Ireland&lt;/td&gt;&lt;td&gt;2,600&lt;/td&gt;&lt;td&gt;143&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Which country shows the highest &lt;b&gt;unemployment rate&lt;/b&gt;?&lt;/p&gt;",
+    "optionsFr": ["Belgique", "Portugal", "Grèce", "Autriche", "Irlande"],
+    "optionsEn": ["Belgium", "Portugal", "Greece", "Austria", "Ireland"],
+    "correct": 1,
+    "explainFr": "Taux = chômeurs / population active. Belgique : 360 / 6 000 = 6,0 %. Portugal : 325 / 5 000 = &lt;b&gt;6,5 %&lt;/b&gt;. Grèce : 288 / 4 800 = 6,0 %. Autriche : 270 / 4 500 = 6,0 %. Irlande : 143 / 2 600 = 5,5 %. Le plus élevé est le &lt;b&gt;Portugal (6,5 %)&lt;/b&gt;. Piège : la Belgique compte le plus de chômeurs en valeur absolue (360 000), mais son taux n'est que de 6,0 %.",
+    "explainEn": "Rate = unemployed / labour force. Belgium: 360 / 6,000 = 6.0%. Portugal: 325 / 5,000 = &lt;b&gt;6.5%&lt;/b&gt;. Greece: 288 / 4,800 = 6.0%. Austria: 270 / 4,500 = 6.0%. Ireland: 143 / 2,600 = 5.5%. The highest is &lt;b&gt;Portugal (6.5%)&lt;/b&gt;. Trap: Belgium has the most unemployed people in absolute terms (360,000), but its rate is only 6.0%."
+  },
+  {
+    "tagFr": "Balance commerciale",
+    "tagEn": "Trade balance",
+    "stemFr": "&lt;table class=\"data\"&gt;&lt;caption&gt;Commerce extérieur d'un État membre (milliards €)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Trimestre&lt;/th&gt;&lt;th&gt;Exportations&lt;/th&gt;&lt;th&gt;Importations&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;T1&lt;/td&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;52&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;T2&lt;/td&gt;&lt;td&gt;55&lt;/td&gt;&lt;td&gt;50&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;T3&lt;/td&gt;&lt;td&gt;60&lt;/td&gt;&lt;td&gt;58&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;T4&lt;/td&gt;&lt;td&gt;62&lt;/td&gt;&lt;td&gt;57&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Quelle est la &lt;b&gt;balance commerciale annuelle&lt;/b&gt; (exportations − importations) ?&lt;/p&gt;",
+    "stemEn": "&lt;table class=\"data\"&gt;&lt;caption&gt;External trade of a Member State (€ billion)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Quarter&lt;/th&gt;&lt;th&gt;Exports&lt;/th&gt;&lt;th&gt;Imports&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Q1&lt;/td&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;52&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Q2&lt;/td&gt;&lt;td&gt;55&lt;/td&gt;&lt;td&gt;50&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Q3&lt;/td&gt;&lt;td&gt;60&lt;/td&gt;&lt;td&gt;58&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Q4&lt;/td&gt;&lt;td&gt;62&lt;/td&gt;&lt;td&gt;57&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;What is the &lt;b&gt;annual trade balance&lt;/b&gt; (exports − imports)?&lt;/p&gt;",
+    "optionsFr": ["−8 Md€", "−4 Md€", "+6 Md€", "+8 Md€", "+12 Md€"],
+    "optionsEn": ["−€8 bn", "−€4 bn", "+€6 bn", "+€8 bn", "+€12 bn"],
+    "correct": 3,
+    "explainFr": "Exportations totales = 48 + 55 + 60 + 62 = 225 Md€. Importations totales = 52 + 50 + 58 + 57 = 217 Md€. Balance = 225 − 217 = &lt;b&gt;+8 Md€&lt;/b&gt; (excédent). Piège : le T1 est déficitaire (48 − 52 = −4 Md€), mais sur l'année entière la balance reste excédentaire.",
+    "explainEn": "Total exports = 48 + 55 + 60 + 62 = €225 bn. Total imports = 52 + 50 + 58 + 57 = €217 bn. Balance = 225 − 217 = &lt;b&gt;+€8 bn&lt;/b&gt; (surplus). Trap: Q1 is in deficit (48 − 52 = −€4 bn), but over the full year the balance remains a surplus."
+  },
+  {
+    "tagFr": "Taux de change",
+    "tagEn": "Exchange rate",
+    "stemFr": "&lt;p&gt;Un agent en mission au Royaume-Uni a engagé des frais de &lt;b&gt;1 260 GBP&lt;/b&gt;. Le taux de change appliqué au remboursement est &lt;b&gt;1 € = 0,84 GBP&lt;/b&gt;. Quel montant, en euros, lui sera remboursé ?&lt;/p&gt;",
+    "stemEn": "&lt;p&gt;An official on mission in the United Kingdom incurred expenses of &lt;b&gt;£1,260&lt;/b&gt;. The exchange rate applied to the reimbursement is &lt;b&gt;€1 = £0.84&lt;/b&gt;. What amount, in euros, will be reimbursed?&lt;/p&gt;",
+    "optionsFr": ["1 058,40 €", "1 400,00 €", "1 470,00 €", "1 500,00 €", "1 512,00 €"],
+    "optionsEn": ["€1,058.40", "€1,400.00", "€1,470.00", "€1,500.00", "€1,512.00"],
+    "correct": 3,
+    "explainFr": "Le taux est exprimé en GBP par euro (1 € = 0,84 GBP). Pour convertir des livres en euros, on &lt;b&gt;divise&lt;/b&gt; par le taux : 1 260 / 0,84 = &lt;b&gt;1 500,00 €&lt;/b&gt;. Piège : multiplier par 0,84 donne 1 058,40 €, ce qui inverse le sens de la conversion.",
+    "explainEn": "The rate is expressed in GBP per euro (€1 = £0.84). To convert pounds into euros, you &lt;b&gt;divide&lt;/b&gt; by the rate: 1,260 / 0.84 = &lt;b&gt;€1,500.00&lt;/b&gt;. Trap: multiplying by 0.84 gives €1,058.40, which reverses the direction of the conversion."
+  },
+  {
+    "tagFr": "TVA",
+    "tagEn": "VAT",
+    "stemFr": "&lt;p&gt;Une facture adressée à une agence de l'UE s'élève à &lt;b&gt;2 420 € TTC&lt;/b&gt;, avec une TVA au taux de &lt;b&gt;21 %&lt;/b&gt;. Quel est le montant &lt;b&gt;hors taxes (HT)&lt;/b&gt; ?&lt;/p&gt;",
+    "stemEn": "&lt;p&gt;An invoice addressed to an EU agency amounts to &lt;b&gt;€2,420 including VAT&lt;/b&gt;, at a VAT rate of &lt;b&gt;21%&lt;/b&gt;. What is the amount &lt;b&gt;excluding VAT (net)&lt;/b&gt;?&lt;/p&gt;",
+    "optionsFr": ["1 911,80 €", "1 958,00 €", "2 000,00 €", "2 100,00 €", "2 200,00 €"],
+    "optionsEn": ["€1,911.80", "€1,958.00", "€2,000.00", "€2,100.00", "€2,200.00"],
+    "correct": 2,
+    "explainFr": "Le montant TTC vaut HT × 1,21. Donc HT = 2 420 / 1,21 = &lt;b&gt;2 000,00 €&lt;/b&gt; (la TVA est alors de 420 €). Piège : soustraire directement 21 % du TTC (2 420 × 0,79 = 1 911,80 €) est faux, car les 21 % s'appliquent au montant HT, pas au TTC.",
+    "explainEn": "The gross amount equals net × 1.21. So net = 2,420 / 1.21 = &lt;b&gt;€2,000.00&lt;/b&gt; (the VAT is then €420). Trap: directly subtracting 21% of the gross amount (2,420 × 0.79 = €1,911.80) is wrong, because the 21% applies to the net amount, not to the gross."
+  },
+  {
+    "tagFr": "Taux d'exécution",
+    "tagEn": "Budget execution rate",
+    "stemFr": "&lt;table class=\"data\"&gt;&lt;caption&gt;Exécution budgétaire de quatre programmes de l'UE (millions €)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Programme&lt;/th&gt;&lt;th&gt;Dotation&lt;/th&gt;&lt;th&gt;Dépensé&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Erasmus+&lt;/td&gt;&lt;td&gt;4 000&lt;/td&gt;&lt;td&gt;3 600&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;LIFE&lt;/td&gt;&lt;td&gt;1 000&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Horizon Europe&lt;/td&gt;&lt;td&gt;10 000&lt;/td&gt;&lt;td&gt;9 200&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;MIE&lt;/td&gt;&lt;td&gt;5 000&lt;/td&gt;&lt;td&gt;4 350&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Quel est le &lt;b&gt;taux d'exécution budgétaire global&lt;/b&gt; des quatre programmes ?&lt;/p&gt;",
+    "stemEn": "&lt;table class=\"data\"&gt;&lt;caption&gt;Budget execution of four EU programmes (€ million)&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Programme&lt;/th&gt;&lt;th&gt;Allocation&lt;/th&gt;&lt;th&gt;Spent&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Erasmus+&lt;/td&gt;&lt;td&gt;4,000&lt;/td&gt;&lt;td&gt;3,600&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;LIFE&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Horizon Europe&lt;/td&gt;&lt;td&gt;10,000&lt;/td&gt;&lt;td&gt;9,200&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;CEF&lt;/td&gt;&lt;td&gt;5,000&lt;/td&gt;&lt;td&gt;4,350&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;What is the &lt;b&gt;overall budget execution rate&lt;/b&gt; of the four programmes?&lt;/p&gt;",
+    "optionsFr": ["85,0 %", "88,5 %", "89,2 %", "90,0 %", "91,0 %"],
+    "optionsEn": ["85.0%", "88.5%", "89.2%", "90.0%", "91.0%"],
+    "correct": 3,
+    "explainFr": "Total dépensé = 3 600 + 850 + 9 200 + 4 350 = 18 000 M€. Total des dotations = 4 000 + 1 000 + 10 000 + 5 000 = 20 000 M€. Taux global = 18 000 / 20 000 = &lt;b&gt;90,0 %&lt;/b&gt;. Piège : faire la moyenne simple des quatre taux (90 % + 85 % + 92 % + 87 %) / 4 = 88,5 % ignore le poids très différent de chaque programme.",
+    "explainEn": "Total spent = 3,600 + 850 + 9,200 + 4,350 = €18,000 M. Total allocation = 4,000 + 1,000 + 10,000 + 5,000 = €20,000 M. Overall rate = 18,000 / 20,000 = &lt;b&gt;90.0%&lt;/b&gt;. Trap: taking the simple average of the four rates (90% + 85% + 92% + 87%) / 4 = 88.5% ignores the very different weight of each programme."
+  },
+  {
+    "tagFr": "Remise en cascade",
+    "tagEn": "Cascade discount",
+    "stemFr": "&lt;p&gt;Un fournisseur accorde à une institution une remise de &lt;b&gt;20 %&lt;/b&gt; sur le prix catalogue de &lt;b&gt;5 000 €&lt;/b&gt;, puis une remise supplémentaire de &lt;b&gt;10 %&lt;/b&gt; sur le montant déjà réduit. Quel est le &lt;b&gt;prix final&lt;/b&gt; ?&lt;/p&gt;",
+    "stemEn": "&lt;p&gt;A supplier grants an institution a &lt;b&gt;20%&lt;/b&gt; discount on the list price of &lt;b&gt;€5,000&lt;/b&gt;, then a further &lt;b&gt;10%&lt;/b&gt; discount on the already-reduced amount. What is the &lt;b&gt;final price&lt;/b&gt;?&lt;/p&gt;",
+    "optionsFr": ["3 300 €", "3 500 €", "3 600 €", "3 750 €", "4 000 €"],
+    "optionsEn": ["€3,300", "€3,500", "€3,600", "€3,750", "€4,000"],
+    "correct": 2,
+    "explainFr": "On applique les remises l'une après l'autre : 5 000 × 0,80 = 4 000 €, puis 4 000 × 0,90 = &lt;b&gt;3 600 €&lt;/b&gt;. Piège : additionner les taux (20 % + 10 % = 30 %) donnerait 5 000 × 0,70 = 3 500 €, ce qui est faux car la seconde remise porte sur un montant déjà diminué (la remise réelle cumulée est de 28 %).",
+    "explainEn": "Apply the discounts one after the other: 5,000 × 0.80 = €4,000, then 4,000 × 0.90 = &lt;b&gt;€3,600&lt;/b&gt;. Trap: adding the rates (20% + 10% = 30%) would give 5,000 × 0.70 = €3,500, which is wrong because the second discount applies to an already-reduced amount (the real combined discount is 28%)."
+  }
+]
