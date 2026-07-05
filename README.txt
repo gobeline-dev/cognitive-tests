@@ -112,21 +112,17 @@ DÉVELOPPEMENT LOCAL
   npm run preview    → prévisualise le build de production
 
 
-DÉPLOIEMENT SUR GITHUB PAGES
-----------------------------
-Deux méthodes, au choix :
+DÉPLOIEMENT SUR GITHUB PAGES (via GitHub Actions)
+-------------------------------------------------
+Le déploiement est AUTOMATIQUE : chaque « git push » sur la branche
+main déclenche le workflow .github/workflows/deploy.yml, qui build
+l'application et publie dist/ sur GitHub Pages.
 
-  1) Automatique (recommandé) — via GitHub Actions
-     Chaque « git push » sur la branche main déclenche le workflow
-     .github/workflows/deploy.yml qui build et publie le site.
-     Prérequis (une seule fois) : dans le dépôt GitHub,
-       Settings > Pages > Build and deployment > Source = GitHub Actions.
+Prérequis — UNE SEULE FOIS, dans le dépôt GitHub :
+  Settings > Pages > Build and deployment > Source = « GitHub Actions ».
 
-  2) Manuel — via le script gh-pages
-       npm run deploy
-     (ou : pwsh ./scripts/deploy.ps1)
-     Publie le contenu de dist/ sur la branche gh-pages.
-     Prérequis : Settings > Pages > Source = branche gh-pages.
+Ensuite, pour publier une mise à jour :
+  git push origin main        (ou : pwsh ./scripts/deploy.ps1)
 
 URL du site publié :
   https://gobeline-dev.github.io/cognitive-tests/
