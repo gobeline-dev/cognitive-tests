@@ -1,0 +1,146 @@
+================================================================
+ ENTRAÎNEMENT AUX TESTS COGNITIFS SHL — PRÉPARATION CONCOURS EPSO
+================================================================
+
+CONTEXTE (demande initiale)
+---------------------------
+« Dans le contexte du concours EPSO j'ai besoin de m'entraîner aux
+  tests cognitifs SHL :
+  https://www.shl.com/products/assessments/cognitive-assessments/
+  Peux-tu me générer cela ? »
+
+Cette application web est une plateforme d'entraînement, indépendante
+et non affiliée à SHL ni à EPSO, qui reproduit les FORMATS des
+évaluations cognitives de type SHL Verify utilisées dans les concours
+de recrutement des institutions de l'Union européenne (EPSO).
+Toutes les questions sont originales.
+
+
+CE QUE FAIT L'APPLICATION
+-------------------------
+Trois familles de tests cognitifs, plus un test complet :
+
+  • Raisonnement numérique (16 questions)
+    Tableaux, graphiques, pourcentages, variations successives,
+    moyennes (dont moyenne harmonique), ratios, taux, indices,
+    règle de trois. Contexte européen (budgets, agences, énergie,
+    démographie, concours).
+
+  • Raisonnement verbal (16 questions)
+    Format « Vrai / Faux / On ne peut pas savoir ». On juge
+    UNIQUEMENT d'après le passage fourni, jamais avec des
+    connaissances extérieures. Pièges classiques : information
+    absente, corrélation ≠ causalité, quantificateurs (« seuls »,
+    « aucun », « plus de », « au moins »), bornes strictes/inclusives.
+
+  • Raisonnement abstrait / inductif (12 questions)
+    Séries logiques, intrus, figures géométriques générées en SVG :
+    rotation, incrémentation, déplacements, doubles règles, relations
+    côtés/points.
+
+Fonctionnalités clés :
+  • Deux modes :
+      - Mode examen        : correction et score affichés à la fin.
+      - Mode apprentissage : correction immédiate après chaque réponse.
+  • Chronomètre optionnel (budget-temps réaliste par section).
+  • Correction commentée : chaque question est expliquée pas à pas,
+    les pièges sont signalés, dans un langage accessible à tous.
+  • Navigation libre : boutons Précédent/Suivant, étoiles de
+    progression cliquables, ou clavier (touches A–E, flèches ← →).
+  • Garde-fou avant de terminer si des questions restent sans réponse.
+  • Persistance locale (localStorage) : reprise automatique d'une
+    session interrompue + historique des scores + tableau de bord de
+    progression, avec bouton de réinitialisation (Reset).
+  • Entièrement fonctionnelle sur mobile (cibles tactiles, responsive).
+
+
+PILE TECHNIQUE
+--------------
+  • React 19 + TypeScript
+  • Vite 6 (build & serveur de développement)
+  • Aucune dépendance UI externe ; figures SVG générées en code.
+  • Déploiement : GitHub Pages.
+
+
+STRUCTURE DU PROJET
+-------------------
+  index.html                 Point d'entrée HTML (polices, montage React)
+  vite.config.ts             Config Vite (base = /cognitive-tests/)
+  tsconfig.json              Config TypeScript
+  package.json               Dépendances et scripts npm
+  public/.nojekyll           Désactive Jekyll sur GitHub Pages
+
+  src/
+    main.tsx                 Montage de l'application React
+    App.tsx                  Machine à états + chrono + persistance
+    styles.css               Feuille de styles (design system complet)
+    types.ts                 Types partagés
+    lib/
+      figures.ts             Générateurs de figures SVG + libellés a11y
+      questions.ts           Assemblage de la banque + normalisation
+      storage.ts             Hook useLocalStorage
+    data/                    « Base de données » de questions
+      numeric.ts             16 questions numériques
+      verbal.ts              16 questions verbales
+      abstract.ts            12 questions abstraites (FigSpec)
+    components/
+      Emblem.tsx             Emblème (anneau d'étoiles)
+      Intro.tsx              Écran d'accueil + tableau de bord
+      Exam.tsx               Écran d'examen (question, chrono, clavier)
+      Results.tsx            Écran de résultats + revue commentée
+
+  scripts/
+    build.ps1                Build de production
+    deploy.ps1               Build + déploiement gh-pages
+  .github/workflows/
+    deploy.yml               Déploiement automatique sur push (main)
+
+
+DÉVELOPPEMENT LOCAL
+-------------------
+  npm install
+  npm run dev        → http://localhost:5173/cognitive-tests/
+  npm run build      → génère dist/
+  npm run preview    → prévisualise le build de production
+
+
+DÉPLOIEMENT SUR GITHUB PAGES
+----------------------------
+Deux méthodes, au choix :
+
+  1) Automatique (recommandé) — via GitHub Actions
+     Chaque « git push » sur la branche main déclenche le workflow
+     .github/workflows/deploy.yml qui build et publie le site.
+     Prérequis (une seule fois) : dans le dépôt GitHub,
+       Settings > Pages > Build and deployment > Source = GitHub Actions.
+
+  2) Manuel — via le script gh-pages
+       npm run deploy
+     (ou : pwsh ./scripts/deploy.ps1)
+     Publie le contenu de dist/ sur la branche gh-pages.
+     Prérequis : Settings > Pages > Source = branche gh-pages.
+
+URL du site publié :
+  https://gobeline-dev.github.io/cognitive-tests/
+
+
+AJOUTER OU MODIFIER DES QUESTIONS
+---------------------------------
+Éditez simplement les fichiers de données dans src/data/ :
+  • numeric.ts  — objets { tag, stem (HTML), options[5], correct, explain }
+  • verbal.ts   — objets { tag, passage, statement, correct, explain }
+  • abstract.ts — objets { tag, prompt, series, options, correct, explain }
+                  où chaque figure est un descripteur [générateur, ...args].
+Les compteurs et budgets-temps s'ajustent automatiquement.
+
+
+MENTIONS
+--------
+Outil d'entraînement indépendant, non affilié à SHL ni à EPSO.
+Ressource officielle de référence :
+  https://www.shl.com/products/assessments/cognitive-assessments/
+
+----------------------------------------------------------------
+Ce fichier est maintenu à jour au fil de l'évolution du projet.
+Dernière mise à jour : voir l'historique git.
+----------------------------------------------------------------
