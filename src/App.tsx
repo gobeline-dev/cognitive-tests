@@ -1,7 +1,7 @@
 // Composant racine : machine à états (accueil / examen / résultats), chrono, persistance.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ExamMode, ExamSection, Session, Store } from './types'
-import { buildQuestions, SEC_MIN, type Lang } from './lib/questions'
+import { buildQuestions, isCorrect, SEC_MIN, type Lang } from './lib/questions'
 import { useLocalStorage } from './lib/storage'
 import { useLang } from './i18n'
 import { Intro } from './components/Intro'
@@ -45,7 +45,7 @@ function markFinished(prev: Store, at: number, lang: Lang): Store {
   const qs = buildQuestions(s.sec, lang)
   let correct = 0
   qs.forEach((q, i) => {
-    if (s.answers[i] === q.correct) correct++
+    if (isCorrect(q, s.answers[i])) correct++
   })
   const total = qs.length
   const record = {
@@ -120,7 +120,7 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
-  function select(i: number) {
+  function select(i: number | null) {
     setStore((prev) =>
       prev.session
         ? { ...prev, session: { ...prev.session, answers: prev.session.answers.map((a, j) => (j === prev.session!.idx ? i : a)) } }

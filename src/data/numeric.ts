@@ -1,6 +1,6 @@
 // Banque de questions — Raisonnement numérique (format SHL Verify / EPSO).
 // Généré et vérifié par un concepteur expert ; arithmétique contrôlée.
-import type { TextQuestion } from '../types'
+import type { InputQuestion, TextQuestion } from '../types'
 
 const T = (kind: 'text', q: Omit<TextQuestion, 'kind' | 'sec'>): TextQuestion => ({
   kind,
@@ -8,7 +8,10 @@ const T = (kind: 'text', q: Omit<TextQuestion, 'kind' | 'sec'>): TextQuestion =>
   ...q,
 })
 
-export const numeric: TextQuestion[] = [
+/** Question à saisie numérique (l'utilisateur tape le nombre, format interactif SHL). */
+const I = (q: Omit<InputQuestion, 'kind' | 'sec'>): InputQuestion => ({ kind: 'input', sec: 'num', ...q })
+
+export const numeric: (TextQuestion | InputQuestion)[] = [
   T('text', {
     tag: 'Variation',
     stem: '<table class="data"><caption>Budget annuel du Fonds social européen+ (milliards €)</caption><thead><tr><th>Année</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Budget</td><td>12,0</td><td>13,5</td><td>15,0</td><td>16,5</td><td>18,0</td></tr></tbody></table><p>De combien, en pourcentage, le budget a-t-il augmenté entre <b>2020 et 2024</b> ?</p>',
@@ -120,5 +123,21 @@ export const numeric: TextQuestion[] = [
     options: ['13,2', '13,6', '14,0', '14,4', '14,8'],
     correct: 1,
     explain: 'Moyenne pondérée = (12 × 3 + 16 × 2) / (3 + 2) = (36 + 32) / 5 = 68 / 5 = <b>13,6</b>. Piège : la moyenne simple (12 + 16)/2 = 14 est fausse car les coefficients diffèrent.',
+  }),
+  I({
+    tag: 'Saisie · Variation',
+    stem: '<table class="data"><caption>Dotation d\'un programme Erasmus+ (millions €)</caption><thead><tr><th>Année</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Dotation</td><td>250</td><td>275</td><td>310</td><td>340</td></tr></tbody></table><p>De combien, <b>en pourcentage</b>, la dotation a-t-elle augmenté entre <b>2021 et 2024</b> ? <i>(Saisissez le nombre, sans le signe %, arrondi à l\'entier.)</i></p>',
+    answer: 36,
+    tolerance: 0,
+    unit: '%',
+    explain: 'Variation = (340 − 250) / 250 = 90 / 250 = 0,36 = <b>36 %</b>. On rapporte l\'écart à la valeur de départ (2021).',
+  }),
+  I({
+    tag: 'Saisie · Règle de trois',
+    stem: '<p>Une équipe traduit <b>18 pages</b> en <b>3 heures</b>.<br>Combien de <b>pages</b> traduira-t-elle en <b>7 heures</b>, au même rythme ? <i>(Saisissez le nombre.)</i></p>',
+    answer: 42,
+    tolerance: 0,
+    unit: 'pages',
+    explain: 'Rythme = 18 / 3 = <b>6 pages/h</b>. En 7 h : 6 × 7 = <b>42 pages</b>.',
   }),
 ]

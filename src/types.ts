@@ -40,7 +40,26 @@ export interface FigureQuestion extends RawBase {
   series: FigSpec[] | null
 }
 
-export type RawQuestion = TextQuestion | VerbalQuestion | FigureQuestion
+/**
+ * Question à saisie numérique : pas de QCM, l'utilisateur tape le nombre attendu.
+ * Reproduit le format « interactif » des tests SHL Verify (number entry).
+ */
+export interface InputQuestion {
+  kind: 'input'
+  sec: 'num'
+  tag: string
+  explain: string
+  /** Énoncé HTML (tableau + question). */
+  stem: string
+  /** Valeur numérique attendue. */
+  answer: number
+  /** Tolérance absolue admise autour de `answer` (défaut 0). */
+  tolerance?: number
+  /** Unité affichée à côté du champ (ex. « % », « € », « km/h »). */
+  unit?: string
+}
+
+export type RawQuestion = TextQuestion | VerbalQuestion | FigureQuestion | InputQuestion
 
 /** Question normalisée, prête à afficher. */
 export interface Question {
@@ -48,10 +67,13 @@ export interface Question {
   tag: string
   stemHTML: string
   options: string[] // texte, ou chaîne SVG pour les figures
-  correct: number
+  correct: number // index de l'option correcte (QCM) ou valeur attendue (saisie)
   explain: string
   fig: boolean
   optionAria?: string[] // libellés accessibles pour les figures
+  input?: boolean // true pour une question à saisie numérique (pas de QCM)
+  tolerance?: number // tolérance absolue pour la saisie numérique
+  unit?: string // unité affichée à côté du champ de saisie
 }
 
 /** Résultat d'une session terminée, conservé dans l'historique. */

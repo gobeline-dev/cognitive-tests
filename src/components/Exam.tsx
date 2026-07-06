@@ -2,7 +2,7 @@
 // options en ordre aléatoire, marquage « à revoir », mode apprentissage.
 import { useEffect, useState } from 'react'
 import type { Question, Session } from '../types'
-import { SEC_MIN } from '../lib/questions'
+import { isCorrect, SEC_MIN } from '../lib/questions'
 import { useLang } from '../i18n'
 import { LangToggle } from './LangToggle'
 
@@ -10,7 +10,7 @@ interface Props {
   session: Session
   qs: Question[]
   remaining: number | null
-  onSelect: (i: number) => void
+  onSelect: (i: number | null) => void
   onGoto: (idx: number) => void
   onPrev: () => void
   onNext: () => void
@@ -25,6 +25,14 @@ export function Exam({ session, qs, remaining, onSelect, onGoto, onPrev, onNext,
   const idx = session.idx
   const q = qs[idx]
   const answered = session.answers[idx]
+  // Texte brut du champ de saisie (questions à réponse numérique), pour préserver
+  // ce que tape l'utilisateur (ex. « 26, » en cours de frappe) sans le reformater.
+  const [draft, setDraft] = useState('')
+  useEffect(() => {
+    setDraft(answered != null ? String(answered) : '')
+    // On ne resynchronise qu'au changement de question (pas à chaque frappe).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx])
   const isLast = idx === qs.length - 1
   const reveal = session.mode === 'learn' && answered != null
   const answeredCount = session.answers.filter((a) => a !== null).length
@@ -131,6 +139,27 @@ export function Exam({ session, qs, remaining, onSelect, onGoto, onPrev, onNext,
           <div className="stem" dangerouslySetInnerHTML={{ __html: q.stemHTML }} />
         </div>
 
+        {q.input ? (
+          <div className="answers input-answer">
+            <input
+              type="text"
+              inputMode="decimal"
+              className="num-input mono"
+              aria-label={t.typeAnswer}
+              placeholder={t.typeAnswer}
+              value={draft}
+              disabled={reveal}
+              onChange={(e) => {
+                const v = e.target.value
+                setDraft(v)
+                const raw = v.replace(',', '.').trim()
+                const n = Number(raw)
+                onSelect(raw === '' || Number.isNaN(n) ? null : n)
+              }}
+            />
+            {q.unit && <span className="unit">{q.unit}</span>}
+          </div>
+        ) : (
         <div className={'answers' + (q.fig ? ' grid5' : '')}>
           {order.map((orig, pos) => {
             const opt = q.options[orig]
@@ -160,11 +189,17 @@ export function Exam({ session, qs, remaining, onSelect, onGoto, onPrev, onNext,
             )
           })}
         </div>
+        )}
 
         {reveal && (
           <div className="feedback">
             <div className="explain">
-              <b>{answered === q.correct ? t.correctPrefix : t.incorrectPrefix}</b>
+              <b>{isCorrect(q, answered) ? t.correctPrefix : t.incorrectPrefix}</b>
+              {q.input && (
+                <span>
+                  {t.correctAnswer} <b>{q.correct}{q.unit ? ` ${q.unit}` : ''}</b>.{' '}
+                </span>
+              )}
               <span dangerouslySetInnerHTML={{ __html: q.explain }} />
             </div>
           </div>

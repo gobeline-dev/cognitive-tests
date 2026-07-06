@@ -1,10 +1,13 @@
 // Question bank — Numerical reasoning (English). Parallel to ../numeric.ts:
 // same order, same option order, same `correct` index.
-import type { TextQuestion } from '../../types'
+import type { InputQuestion, TextQuestion } from '../../types'
 
 const T = (q: Omit<TextQuestion, 'kind' | 'sec'>): TextQuestion => ({ kind: 'text', sec: 'num', ...q })
 
-export const numeric: TextQuestion[] = [
+/** Numeric-entry question (the user types the number, SHL interactive format). */
+const I = (q: Omit<InputQuestion, 'kind' | 'sec'>): InputQuestion => ({ kind: 'input', sec: 'num', ...q })
+
+export const numeric: (TextQuestion | InputQuestion)[] = [
   T({
     tag: 'Change',
     stem: '<table class="data"><caption>Annual budget of the European Social Fund+ (€ billion)</caption><thead><tr><th>Year</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Budget</td><td>12.0</td><td>13.5</td><td>15.0</td><td>16.5</td><td>18.0</td></tr></tbody></table><p>By what percentage did the budget increase between <b>2020 and 2024</b>?</p>',
@@ -116,5 +119,21 @@ export const numeric: TextQuestion[] = [
     options: ['13.2', '13.6', '14.0', '14.4', '14.8'],
     correct: 1,
     explain: 'Weighted average = (12 × 3 + 16 × 2) / (3 + 2) = (36 + 32) / 5 = 68 / 5 = <b>13.6</b>. Trap: the simple average (12 + 16)/2 = 14 is wrong because the coefficients differ.',
+  }),
+  I({
+    tag: 'Entry · Change',
+    stem: '<table class="data"><caption>Funding of an Erasmus+ programme (€ million)</caption><thead><tr><th>Year</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Funding</td><td>250</td><td>275</td><td>310</td><td>340</td></tr></tbody></table><p>By what <b>percentage</b> did the funding increase between <b>2021 and 2024</b>? <i>(Type the number, without the % sign, rounded to the nearest integer.)</i></p>',
+    answer: 36,
+    tolerance: 0,
+    unit: '%',
+    explain: 'Change = (340 − 250) / 250 = 90 / 250 = 0.36 = <b>36%</b>. The difference is taken relative to the starting value (2021).',
+  }),
+  I({
+    tag: 'Entry · Proportion',
+    stem: '<p>A team translates <b>18 pages</b> in <b>3 hours</b>.<br>How many <b>pages</b> will it translate in <b>7 hours</b>, at the same rate? <i>(Type the number.)</i></p>',
+    answer: 42,
+    tolerance: 0,
+    unit: 'pages',
+    explain: 'Rate = 18 / 3 = <b>6 pages/h</b>. In 7 h: 6 × 7 = <b>42 pages</b>.',
   }),
 ]

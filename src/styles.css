@@ -203,6 +203,16 @@ svg.fig{width:100%;height:100%;display:block}
 .ans.wrong{border-color:var(--bad);background:var(--bad-wash);box-shadow:inset 0 0 0 1px var(--bad)}
 .ans.wrong .key{background:var(--bad);color:#fff}
 
+/* Saisie numérique (format interactif SHL) */
+.input-answer{flex-direction:row;align-items:center;gap:12px}
+.num-input{
+  flex:0 1 220px;padding:13px 15px;font-size:18px;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--line);border-radius:11px;transition:.13s;
+}
+.num-input:focus{outline:none;border-color:var(--blue);background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue)}
+.num-input:disabled{cursor:default;opacity:.8}
+.input-answer .unit{font-size:16px;color:var(--ink-soft);font-weight:600}
+
 .feedback{margin:6px 24px 0}
 .feedback .explain{margin-top:0}
 

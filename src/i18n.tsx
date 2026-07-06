@@ -51,6 +51,7 @@ export interface Strings {
   finish: string
   correctPrefix: string
   incorrectPrefix: string
+  typeAnswer: string
   quit: string
   modalTitle: string
   modalBody: (count: number, list: string) => string
@@ -131,6 +132,7 @@ const EN: Strings = {
   finish: 'Finish ✓',
   correctPrefix: '✓ Correct — ',
   incorrectPrefix: '✗ Incorrect — ',
+  typeAnswer: 'Type your answer',
   quit: 'Give up and return home',
   modalTitle: 'Finish the test?',
   modalBody: (count, list) =>
@@ -210,6 +212,7 @@ const FR: Strings = {
   finish: 'Terminer ✓',
   correctPrefix: '✓ Correct — ',
   incorrectPrefix: '✗ Incorrect — ',
+  typeAnswer: 'Saisissez votre réponse',
   quit: "Abandonner et revenir à l'accueil",
   modalTitle: 'Terminer le test ?',
   modalBody: (count, list) =>

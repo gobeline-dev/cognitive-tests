@@ -53,7 +53,31 @@ export function normalize(q: RawQuestion, lang: Lang): Question {
       fig: true,
     }
   }
+  if (q.kind === 'input') {
+    return {
+      sec: q.sec,
+      tag: q.tag,
+      stemHTML: q.stem,
+      options: [],
+      correct: q.answer,
+      explain: q.explain,
+      fig: false,
+      input: true,
+      tolerance: q.tolerance ?? 0,
+      unit: q.unit,
+    }
+  }
   return { sec: q.sec, tag: q.tag, stemHTML: q.stem, options: q.options, correct: q.correct, explain: q.explain, fig: false }
+}
+
+/**
+ * Vrai si `ans` est correcte. Pour un QCM, on compare l'index à `q.correct` ;
+ * pour une saisie numérique, on compare la valeur à `q.correct` avec la tolérance.
+ */
+export function isCorrect(q: Question, ans: number | null): boolean {
+  if (ans == null) return false
+  if (q.input) return Math.abs(ans - q.correct) <= (q.tolerance ?? 0)
+  return ans === q.correct
 }
 
 /** Construit la liste normalisée des questions d'une section, dans la langue donnée. */

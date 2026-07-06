@@ -1,5 +1,6 @@
 // Écran de résultats : anneau de score, sous-scores, temps moyen, revue commentée.
 import type { Question, Session } from '../types'
+import { isCorrect } from '../lib/questions'
 import { useLang } from '../i18n'
 
 interface Props {
@@ -15,7 +16,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   let correct = 0
   const bySec: Record<string, { ok: number; tot: number }> = {}
   qs.forEach((q, i) => {
-    const ok = ans[i] === q.correct
+    const ok = isCorrect(q, ans[i])
     if (ok) correct++
     bySec[q.sec] = bySec[q.sec] || { ok: 0, tot: 0 }
     bySec[q.sec].tot++
@@ -30,7 +31,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   qs.forEach((q, i) => {
     if (q.sec === 'verb' && q.correct === 2) {
       onpsTot++
-      if (ans[i] === q.correct) onpsOk++
+      if (isCorrect(q, ans[i])) onpsOk++
     }
   })
 
@@ -49,7 +50,7 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
   qs.forEach((q, i) => {
     byTag[q.tag] = byTag[q.tag] || { ok: 0, tot: 0 }
     byTag[q.tag].tot++
-    if (ans[i] === q.correct) byTag[q.tag].ok++
+    if (isCorrect(q, ans[i])) byTag[q.tag].ok++
   })
   const tags = Object.entries(byTag).sort((a, b) => a[1].ok / a[1].tot - b[1].ok / b[1].tot)
 
@@ -131,8 +132,9 @@ export function Results({ session, qs, onRetry, onHome }: Props) {
           {qs.map((q, i) => {
             const a = ans[i]
             const skipped = a === null
-            const ok = a === q.correct
-            const optLabel = (j: number) => (q.fig ? t.answerLabel(String.fromCharCode(65 + j)) : q.options[j])
+            const ok = isCorrect(q, a)
+            const optLabel = (j: number) =>
+              q.fig ? t.answerLabel(String.fromCharCode(65 + j)) : q.input ? `${j}${q.unit ? ` ${q.unit}` : ''}` : q.options[j]
             return (
               <div key={i} className={'rev-item ' + (skipped ? 'skip' : ok ? 'ok' : 'ko')}>
                 <div className="rev-top">
